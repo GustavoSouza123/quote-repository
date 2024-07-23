@@ -4,7 +4,9 @@ A collection of quotes from different authors and thinkers.
 
 Live demo on [my portfolio website](https://www.gustavo-souza.com)
 
-Technologies used:
+---
+
+#### Technologies used:
 
 Frontend:
 
