@@ -1,9 +1,10 @@
 import express from 'express';
-import { getQuotes } from '../controllers/quotes.controller.js';
+import { createQuote, getQuote, getQuotes } from '../controllers/quotes.controller.js';
 
+const quotesRouter = express.Router();
 
-const router = express.Router();
+quotesRouter.get('/', getQuotes);
+quotesRouter.get('/:id', getQuote);
+quotesRouter.post('/', createQuote);
 
-router.get('/', getQuotes);
-
-export default router;
+export default quotesRouter;
