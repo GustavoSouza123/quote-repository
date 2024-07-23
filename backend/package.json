@@ -1,0 +1,30 @@
+{
+  "name": "quote-repository-api",
+  "version": "1.0.0",
+  "description": "The API for a collection of quotes from different authors and thinkers",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GustavoSouza123/quote-repository.git"
+  },
+  "author": "Gustavo Souza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GustavoSouza123/quote-repository/issues"
+  },
+  "homepage": "https://github.com/GustavoSouza123/quote-repository#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
