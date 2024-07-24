@@ -12,7 +12,7 @@ app.use(cors());
 app.use('/api/quotes', quotesRoutes);
 app.use('/api/tags', tagsRoutes);
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.status(200).json({ message: 'Server running' });
 });
 
