@@ -1,60 +1,57 @@
 import { db } from '../database/db.js';
 
-export const getTags = (_req, res) => {
-    const q = 'SELECT * FROM tags';
+export const getTags = async (_req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM tags');
 
-    db.query(q, (err, data) => {
-        if (err) return res.json(err);
-
-        if (data.length == 0) {
+        if (rows.length == 0) {
             return res.json({ message: 'No tags found' });
         }
 
-        return res.status(200).json(data);
-    });
+        return res.status(200).json(rows);
+    } catch (err) {
+        return res.json(err);
+    }
 };
 
-export const getTag = (req, res) => {
-    const q = 'SELECT * FROM tags WHERE id = ?';
+export const getTag = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM tags WHERE id = ?', req.params.id);
 
-    db.query(q, [req.params.id], (err, data) => {
-        if (err) return res.json(err);
-
-        if (data.length == 0) {
+        if (rows.length == 0) {
             return res.json({ message: 'No tags found' });
         }
 
-        return res.status(200).json(data);
-    });
+        return res.status(200).json(rows);
+    } catch (err) {
+        return res.json(err);
+    }
 };
 
-export const createTag = (req, res) => {
-    const q = 'INSERT INTO tags (tag) VALUES (?)';
-
-    const values = [req.body.tag];
-
-    db.query(q, [...values], (err) => {
-        if (err) return res.json(err);
+export const createTag = async (req, res) => {
+    try {
+        await db.query('INSERT INTO tags (tag) VALUES (?)', req.body.tag);
         return res.status(201).json({ message: 'Tag created successfully' });
-    });
+    } catch (err) {
+        return res.json(err);
+    }
 };
 
-export const updateTag = (req, res) => {
-    const q = 'UPDATE tags SET tag = ? WHERE id = ?';
-
-    const values = [req.body.tag];
-
-    db.query(q, [...values, req.params.id], (err) => {
-        if (err) return res.json(err);
+export const updateTag = async (req, res) => {
+    try {
+        const values = [req.body.tag, req.params.id];
+        await db.query('UPDATE tags SET tag = ? WHERE id = ?', values);
         return res.status(200).json({ message: 'Tag updated successfully' });
-    });
+    } catch (err) {
+        return res.json(err);
+    }
 };
 
-export const deleteTag = (req, res) => {
-    const q = 'DELETE FROM tags WHERE id = ?';
-
-    db.query(q, [req.params.id], (err) => {
-        if (err) return res.json(err);
+export const deleteTag = async (req, res) => {
+    try {
+        await db.query('DELETE FROM tags WHERE id = ?', req.params.id);
         return res.status(200).json({ message: 'Tag deleted successfully' });
-    });
+    } catch (err) {
+        return res.json(err);
+    }
 };
