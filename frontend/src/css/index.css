@@ -4,11 +4,22 @@
 
 @layer base {
     :root {
-        /* css variables */
+        --blue-primary: #0369a1;
+        --border: #555;
     }
 
     html,
     body {
-        /* font settings */
+        font-family: "Rubik", sans-serif;
+        font-size: 15px;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        color: #ddd;
+        background-color: #1d1d1d;
+    }
+
+    h1 {
+        font-family: "Lora", serif;
     }
 }

@@ -42,8 +42,8 @@ export default function App() {
                 <RandomQuote />
             </div>
 
-            <div className="w-full max-w-[1200px] mx-10 px-5 py-5 border">
-                <div className="flex justify-between pb-5 border-b">
+            <div className="w-full max-w-[1200px] mx-10 px-5 py-5 border border-gray">
+                <div className="flex items-center justify-between pb-5">
                     <Search />
                     <AddQuoteButton />
                 </div>
@@ -57,7 +57,7 @@ export default function App() {
                         />
                     ))
                 ) : (
-                    <div className="pt-5">No quotes found</div>
+                    <div className="pt-5 border-t border-gray">No quotes found</div>
                 )}
             </div>
         </div>

@@ -8,6 +8,10 @@ export default {
                 sm: { max: '767px' }, // <= 767px
                 lg: { min: '768px' }, // >= 768px
             },
+            colors: {
+                blue: 'var(--blue-primary)',
+                gray: 'var(--border)',
+            },
         },
     },
     plugins: [],
