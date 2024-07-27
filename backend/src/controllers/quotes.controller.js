@@ -65,7 +65,18 @@ export const updateQuote = async (req, res) => {
             values
         );
 
-        // TO-DO: UPDATE TAGS TABLE
+        await db.query(
+            'DELETE FROM quotes_tags WHERE quoteId = ?',
+            req.params.id
+        );
+
+        const tags = req.body.tags;
+        tags.forEach(async (tag) => {
+            await db.query(
+                'INSERT INTO quotes_tags (quoteId, tagId) VALUES (?, ?)',
+                [req.params.id, tag]
+            );
+        });
 
         return res.status(200).json({ message: 'Quote updated successfully' });
     } catch (err) {
@@ -75,7 +86,10 @@ export const updateQuote = async (req, res) => {
 
 export const deleteQuote = async (req, res) => {
     try {
-        await db.query('DELETE FROM quotes_tags WHERE quoteId = ?', req.params.id);
+        await db.query(
+            'DELETE FROM quotes_tags WHERE quoteId = ?',
+            req.params.id
+        );
         await db.query('DELETE FROM quotes WHERE id = ?', req.params.id);
         return res.status(200).json({ message: 'Quote deleted successfully' });
     } catch (err) {
