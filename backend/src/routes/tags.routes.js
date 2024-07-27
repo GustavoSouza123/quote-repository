@@ -7,12 +7,12 @@ import {
     updateTag,
 } from '../controllers/tags.controller.js';
 
-const tagsRouter = express.Router();
+const router = express.Router();
 
-tagsRouter.get('/', getTags);
-tagsRouter.get('/:id', getTag);
-tagsRouter.post('/', createTag);
-tagsRouter.put('/:id', updateTag);
-tagsRouter.delete('/:id', deleteTag);
+router.get('/', getTags);
+router.get('/:id', getTag);
+router.post('/', createTag);
+router.put('/:id', updateTag);
+router.delete('/:id', deleteTag);
 
-export default tagsRouter;
+export default router;

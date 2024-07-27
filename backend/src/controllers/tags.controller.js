@@ -16,7 +16,10 @@ export const getTags = async (_req, res) => {
 
 export const getTag = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM tags WHERE id = ?', req.params.id);
+        const [rows] = await db.query(
+            'SELECT * FROM tags WHERE id = ?',
+            req.params.id
+        );
 
         if (rows.length == 0) {
             return res.json({ message: 'No tags found' });
@@ -40,7 +43,10 @@ export const createTag = async (req, res) => {
 export const updateTag = async (req, res) => {
     try {
         const values = [req.body.tag, req.params.id];
-        await db.query('UPDATE tags SET tag = ?, updatedAt = NOW() WHERE id = ?', values);
+        await db.query(
+            'UPDATE tags SET tag = ?, updatedAt = NOW() WHERE id = ?',
+            values
+        );
         return res.status(200).json({ message: 'Tag updated successfully' });
     } catch (err) {
         return res.json(err);

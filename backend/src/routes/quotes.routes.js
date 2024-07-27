@@ -7,12 +7,12 @@ import {
     updateQuote,
 } from '../controllers/quotes.controller.js';
 
-const quotesRouter = express.Router();
+const router = express.Router();
 
-quotesRouter.get('/', getQuotes);
-quotesRouter.get('/:id', getQuote);
-quotesRouter.post('/', createQuote);
-quotesRouter.put('/:id', updateQuote);
-quotesRouter.delete('/:id', deleteQuote);
+router.get('/', getQuotes);
+router.get('/:id', getQuote);
+router.post('/', createQuote);
+router.put('/:id', updateQuote);
+router.delete('/:id', deleteQuote);
 
-export default quotesRouter;
+export default router;

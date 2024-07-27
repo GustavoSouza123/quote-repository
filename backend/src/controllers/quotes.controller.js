@@ -2,7 +2,7 @@ import { db } from '../database/db.js';
 
 export const getQuotes = async (_req, res) => {
     try {
-        const [rows] = await db.query('SELECT q.*, t.tag FROM quotes AS q LEFT JOIN quotes_tags AS qt ON q.id = qt.quoteId LEFT JOIN tags AS t ON t.id = qt.tagId ORDER BY q.id');
+        const [rows] = await db.query('SELECT * FROM quotes');
 
         if (rows.length == 0) {
             return res.json({ message: 'No quotes found' });
@@ -16,7 +16,7 @@ export const getQuotes = async (_req, res) => {
 
 export const getQuote = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT q.*, t.tag FROM quotes AS q INNER JOIN quotes_tags AS qt ON q.id = qt.quoteId INNER JOIN tags AS t ON t.id = qt.tagId WHERE q.id = ?', [
+        const [rows] = await db.query('SELECT * FROM quotes WHERE id = ?', [
             req.params.id,
         ]);
 
@@ -65,6 +65,8 @@ export const updateQuote = async (req, res) => {
             values
         );
 
+        // TO-DO: UPDATE TAGS TABLE
+
         return res.status(200).json({ message: 'Quote updated successfully' });
     } catch (err) {
         return res.json(err);
@@ -73,10 +75,8 @@ export const updateQuote = async (req, res) => {
 
 export const deleteQuote = async (req, res) => {
     try {
-        await db.query(
-            'DELETE FROM quotes WHERE id = ?',
-            req.params.id
-        );
+        await db.query('DELETE FROM quotes_tags WHERE quoteId = ?', req.params.id);
+        await db.query('DELETE FROM quotes WHERE id = ?', req.params.id);
         return res.status(200).json({ message: 'Quote deleted successfully' });
     } catch (err) {
         return res.json(err);
