@@ -40,7 +40,7 @@ export const createTag = async (req, res) => {
 export const updateTag = async (req, res) => {
     try {
         const values = [req.body.tag, req.params.id];
-        await db.query('UPDATE tags SET tag = ? WHERE id = ?', values);
+        await db.query('UPDATE tags SET tag = ?, updatedAt = NOW() WHERE id = ?', values);
         return res.status(200).json({ message: 'Tag updated successfully' });
     } catch (err) {
         return res.json(err);

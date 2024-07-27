@@ -2,7 +2,7 @@ import { db } from '../database/db.js';
 
 export const getQuotes = async (_req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM quotes');
+        const [rows] = await db.query('SELECT q.*, t.tag FROM quotes AS q LEFT JOIN quotes_tags AS qt ON q.id = qt.quoteId LEFT JOIN tags AS t ON t.id = qt.tagId ORDER BY q.id');
 
         if (rows.length == 0) {
             return res.json({ message: 'No quotes found' });
@@ -16,7 +16,7 @@ export const getQuotes = async (_req, res) => {
 
 export const getQuote = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM quotes WHERE id = ?', [
+        const [rows] = await db.query('SELECT q.*, t.tag FROM quotes AS q INNER JOIN quotes_tags AS qt ON q.id = qt.quoteId INNER JOIN tags AS t ON t.id = qt.tagId WHERE q.id = ?', [
             req.params.id,
         ]);
 
@@ -61,7 +61,7 @@ export const updateQuote = async (req, res) => {
     try {
         const values = [req.body.quote, req.body.author, req.params.id];
         await db.query(
-            'UPDATE quotes SET quote = ?, author = ? WHERE id = ?',
+            'UPDATE quotes SET quote = ?, author = ?, updatedAt = NOW() WHERE id = ?',
             values
         );
 
