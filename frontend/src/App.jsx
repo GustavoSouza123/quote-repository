@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './css/index.css';
 
 import Title from './components/Title';
@@ -12,38 +13,52 @@ import QuoteContent from './components/QuoteContent';
 
 export default function App() {
     const [isAdding, setIsAdding] = useState(false);
-    const [quotes, setQuotes] = useState([
-        {
-            quote: 'A super hiper interesting, meaningful and useful quote from a very famous author',
-            author: 'Gustavo Souza',
-        },
-        {
-            quote: 'Another quote, this time shorter',
-            author: 'John Doe',
-        },
-        {
-            quote: 'The last quote of this dummy quotes to test my app',
-            author: 'Foo Person',
-        },
-    ]);
+    const [quotes, setQuotes] = useState([]);
+    const [tags, setTags] = useState({});
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8000/api/quotes')
+            .then((res) => setQuotes(res.data))
+            .catch((error) => console.log(error));
+
+        axios
+            .get('http://localhost:8000/api/all')
+            .then((res) => {
+                let tagsObj = {};
+                res.data.forEach((tag) => {
+                    tagsObj[tag.id] = [...(tagsObj[tag.id] || ''), tag.tag];
+                });
+                setTags(tagsObj);
+            })
+            .catch((error) => console.log(error));
+    }, []);
 
     return (
-        <div className="min-h-[100dvh] flex flex-col items-center py-10">
+        <div className="min-h-[100dvh] flex flex-col items-center px-5 py-10">
             <Title content={isAdding ? 'Add Quote' : 'Quote Repository'} />
 
             <div className="">
                 <RandomQuote />
             </div>
 
-            <div className="w-full max-w-[1200px] mx-10 px-5 py-5 border border-solid border-gray-200">
-                <div className="flex justify-between">
+            <div className="w-full max-w-[1200px] mx-10 px-5 py-5 border">
+                <div className="flex justify-between pb-5 border-b">
                     <Search />
                     <AddQuoteButton />
                 </div>
 
-                {quotes.map((quote) => (
-                    <QuotePreview quote={quote.quote} author={quote.author} />
-                ))}
+                {quotes.length > 0 ? (
+                    quotes.map((quote) => (
+                        <QuotePreview
+                            quote={quote}
+                            tags={tags}
+                            key={quote.id}
+                        />
+                    ))
+                ) : (
+                    <div className="pt-5">No quotes found</div>
+                )}
             </div>
         </div>
     );
