@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function QuotePreview({ quote, tags }) {
     return (
-        <div className="flex flex-col gap-1 py-5 border-t border-gray">
+        <div className="flex flex-col gap-1 py-5 border-t border-gray hover:bg-hover transition">
             <div className="">“{quote.quote}”</div>
             <div className="">– {quote.author}</div>
             <div className="flex gap-2">

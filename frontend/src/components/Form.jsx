@@ -2,11 +2,15 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function Form() {
-    const [data, setData] = useState({
+export default function Form({ table }) {
+    const values = table == 'quotes' ? {
         quote: '',
         author: '',
-    });
+    } : table == 'tags' ? {
+        tag: ''
+    } : {};
+
+    const [data, setData] = useState(values);
 
     const handleInput = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
@@ -23,7 +27,7 @@ export default function Form() {
     return (
         <>
             <form
-                className="flex flex-col gap-10 py-10"
+                className="flex flex-col gap-5 py-10"
                 onSubmit={handleSubmit}
                 method="post"
             >

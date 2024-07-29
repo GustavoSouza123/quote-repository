@@ -11,6 +11,7 @@ export default {
             colors: {
                 blue: 'var(--blue-primary)',
                 gray: 'var(--border)',
+                hover: 'var(--hover)',
             },
         },
     },
