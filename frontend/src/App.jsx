@@ -125,7 +125,10 @@ export default function App() {
                 </div>
 
                 <div className="flex gap-3">
-                    <Button onClick={handleAddQuoteBtnClick} action="Add Quote" />
+                    <Button
+                        onClick={handleAddQuoteBtnClick}
+                        action="Add Quote"
+                    />
                     <Button onClick={handleAddTagBtnClick} action="Add Tag" />
                 </div>
             </div>
@@ -140,8 +143,14 @@ export default function App() {
                 <RandomQuote quote={randomQuote} />
             </div>
 
-            <div className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 ${isAdding ? 'justify-center' : 'justify-between'} mx-10 px-5 border border-gray`}>
-                {isAdding ? <Form table={formTable} /> : mainPageComponent}
+            <div
+                className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 ${isAdding ? 'justify-center' : 'justify-between'} mx-10 px-5 border border-gray`}
+            >
+                {isAdding ? (
+                    <Form table={formTable} tags={tags} />
+                ) : (
+                    mainPageComponent
+                )}
             </div>
         </div>
     );
