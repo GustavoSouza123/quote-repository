@@ -22,10 +22,12 @@ export default function App() {
         const getQuotes = async () => {
             try {
                 const res = await axios.get('http://localhost:8000/api/quotes');
-                setQuotes(res.data);
-                setRandomQuote(
-                    res.data[Math.floor(Math.random() * res.data.length)]
-                );
+                if (res.data.length) {
+                    setQuotes(res.data);
+                    setRandomQuote(
+                        res.data[Math.floor(Math.random() * res.data.length)]
+                    );
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -34,7 +36,9 @@ export default function App() {
         const getTags = async () => {
             try {
                 const res = await axios.get('http://localhost:8000/api/tags');
-                setTags(res.data);
+                if (res.data.length) {
+                    setTags(res.data);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -43,11 +47,13 @@ export default function App() {
         const getTagsFromQuotes = async () => {
             try {
                 const res = await axios.get('http://localhost:8000/api/all');
-                let tagsObj = {};
-                res.data.forEach((tag) => {
-                    tagsObj[tag.id] = [...(tagsObj[tag.id] || ''), tag.tag];
-                });
-                setTagsFromQuotes(tagsObj);
+                if (res.data.length) {
+                    let tagsObj = {};
+                    res.data.forEach((tag) => {
+                        tagsObj[tag.id] = [...(tagsObj[tag.id] || ''), tag.tag];
+                    });
+                    setTagsFromQuotes(tagsObj);
+                }
             } catch (error) {
                 console.log(error);
             }
