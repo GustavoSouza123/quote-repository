@@ -76,7 +76,7 @@ export default function App() {
 
     const mainPageComponent = (
         <>
-            <div className="w-1/2">
+            <div className="lg:min-w-1/2 sm:w-full">
                 <div className="flex items-center justify-between py-5">
                     <div className="w-full flex items-center">
                         <input
@@ -87,7 +87,7 @@ export default function App() {
                     </div>
                 </div>
 
-                <div className="pb-5">
+                <div className="">
                     {quotes ? (
                         quotes.map((quote) => (
                             <QuotePreview
@@ -104,7 +104,7 @@ export default function App() {
                 </div>
             </div>
 
-            <div className="w-1/2 py-5 flex flex-col gap-5">
+            <div className="lg:max-w-1/2 sm:w-full py-5 flex flex-col gap-5 sm:border-t sm:border-gray">
                 <div className="">
                     <span className="font-semibold">Tags:</span>
                     <div className="flex gap-2">
@@ -140,7 +140,7 @@ export default function App() {
                 <RandomQuote quote={randomQuote} />
             </div>
 
-            <div className={`w-full max-w-[1200px] flex gap-10 ${isAdding ? 'justify-center' : 'justify-between'} mx-10 px-5 border border-gray`}>
+            <div className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 ${isAdding ? 'justify-center' : 'justify-between'} mx-10 px-5 border border-gray`}>
                 {isAdding ? <Form table={formTable} /> : mainPageComponent}
             </div>
         </div>
