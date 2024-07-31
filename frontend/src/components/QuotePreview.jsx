@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import dots from '../assets/dots.svg';
 
-export default function QuotePreview({ quote, tags, handleEditQuoteBtnClick }) {
+export default function QuotePreview({ quote, tags, handleTagClick, handleEditQuoteBtnClick }) {
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
 
@@ -46,6 +46,7 @@ export default function QuotePreview({ quote, tags, handleEditQuoteBtnClick }) {
                     tags[quote.id].map((tag, id) => (
                         <div
                             className="cursor-pointer underline font-light"
+                            onClick={() => {handleTagClick(tag)}}
                             key={id}
                         >
                             {tag}
