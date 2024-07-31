@@ -2,12 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function Form({ table, tags }) {
+export default function Form({ table, tags, isEditing, editingQuote }) {
     const values =
         table == 'quotes'
             ? {
-                  quote: '',
-                  author: '',
+                  quote: isEditing ? editingQuote.quote : '',
+                  author: isEditing ? editingQuote.author : '',
               }
             : table == 'tags'
               ? {
@@ -23,38 +23,48 @@ export default function Form({ table, tags }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await axios
-            .post(`http://localhost:8000/api/${table}`, data)
-            .then((res) => location.reload())
-            .catch((error) => console.log(error));
+
+        if (isEditing) {
+            await axios
+                .put(`http://localhost:8000/api/${table}/${editingQuote.id}`, data)
+                .then(() => location.reload())
+                .catch((error) => console.log(error));
+        } else {
+            await axios
+                .post(`http://localhost:8000/api/${table}`, data)
+                .then(() => location.reload())
+                .catch((error) => console.log(error));
+        }
     };
 
     const inputs =
         table == 'quotes' ? (
             <>
-                <div className="w-[330px] flex justify-between items-center">
+                <div className="w-[360px] flex justify-between items-center">
                     <label htmlFor="quote">Quote</label>
-                    <input
-                        type="text"
+                    <textarea
                         name="quote"
                         id="quote"
+                        rows={6}
+                        defaultValue={editingQuote ? editingQuote.quote : ''}
                         onChange={handleInput}
-                        className="w-72 h-4 bg-transparent border border-gray outline-none px-2 py-4 rounded"
-                    />
+                        className="w-80 bg-transparent border border-gray outline-none p-2 rounded resize-none"
+                    ></textarea>
                 </div>
 
-                <div className="w-[330px] flex justify-between items-center">
+                <div className="w-[360px] flex justify-between items-center">
                     <label htmlFor="author">Author</label>
                     <input
                         type="text"
                         name="author"
                         id="author"
+                        defaultValue={editingQuote ? editingQuote.author : ''}
                         onChange={handleInput}
-                        className="w-72 h-4 bg-transparent border border-gray outline-none px-2 py-4 rounded"
+                        className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
                     />
                 </div>
 
-                <div className="w-[330px] flex flex-wrap gap-3">
+                <div className="w-[360px] flex flex-wrap gap-3">
                     {tags.map((tag, id) => (
                         <div className="flex items-center" key={id}>
                             <input
@@ -70,14 +80,14 @@ export default function Form({ table, tags }) {
             </>
         ) : table == 'tags' ? (
             <>
-                <div className="w-[310px] flex justify-between items-center">
+                <div className="w-[340px] flex justify-between items-center">
                     <label htmlFor="quote">Tag</label>
                     <input
                         type="text"
                         name="tag"
                         id="tag"
                         onChange={handleInput}
-                        className="w-72 h-4 bg-transparent border border-gray outline-none px-2 py-4 rounded"
+                        className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
                     />
                 </div>
             </>
@@ -88,7 +98,7 @@ export default function Form({ table, tags }) {
     return (
         <>
             <form
-                className="flex flex-col gap-5 py-10"
+                className="w-full flex flex-col items-center gap-5 py-10"
                 onSubmit={handleSubmit}
                 method="post"
             >

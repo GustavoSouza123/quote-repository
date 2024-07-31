@@ -3,14 +3,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import dots from '../assets/dots.svg';
 
-export default function QuotePreview({ quote, tags }) {
-    const [isEditing, setIsEditing] = useState(false);
+export default function QuotePreview({ quote, tags, handleEditQuoteBtnClick }) {
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
-
-    const handleEditQuoteBtnClick = () => {
-        setIsEditing(true);
-    };
 
     const handleDeleteQuoteBtnClick = async () => {
         try {
@@ -73,7 +68,7 @@ export default function QuotePreview({ quote, tags }) {
                 className={`absolute bottom-5 right-5 ${click ? 'flex' : 'hidden'} gap-5 justify-center items-center`}
             >
                 <div
-                    onClick={handleEditQuoteBtnClick}
+                    onClick={() => handleEditQuoteBtnClick(quote)}
                     className="cursor-pointer hover:hover:text-[#aaa] transition"
                 >
                     Edit

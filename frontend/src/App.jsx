@@ -12,6 +12,8 @@ import QuoteContent from './components/QuoteContent';
 
 export default function App() {
     const [isAdding, setIsAdding] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editingQuote, setEditingQuote] = useState({});
     const [formTable, setFormTable] = useState('');
     const [quotes, setQuotes] = useState([]);
     const [randomQuote, setRandomQuote] = useState([]);
@@ -74,6 +76,12 @@ export default function App() {
         setFormTable('tags');
     };
 
+    const handleEditQuoteBtnClick = (quote) => {
+        setIsEditing(true);
+        setFormTable('quotes');
+        setEditingQuote(quote);
+    };
+
     const mainPageComponent = (
         <>
             <div className="lg:min-w-1/2 sm:w-full">
@@ -93,6 +101,9 @@ export default function App() {
                             <QuotePreview
                                 quote={quote}
                                 tags={tagsFromQuotes}
+                                handleEditQuoteBtnClick={
+                                    handleEditQuoteBtnClick
+                                }
                                 key={quote.id}
                             />
                         ))
@@ -144,10 +155,15 @@ export default function App() {
             </div>
 
             <div
-                className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 ${isAdding ? 'justify-center' : 'justify-between'} mx-10 px-5 border border-gray`}
+                className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 sm:items-center ${isAdding ? 'justify-center' : 'justify-between'} mx-10 px-5 border border-gray`}
             >
-                {isAdding ? (
-                    <Form table={formTable} tags={tags} />
+                {isAdding || isEditing ? (
+                    <Form
+                        table={formTable}
+                        tags={tags}
+                        isEditing={isEditing}
+                        editingQuote={editingQuote}
+                    />
                 ) : (
                     mainPageComponent
                 )}
