@@ -15,6 +15,7 @@ export default function App() {
     const [isEditing, setIsEditing] = useState(false);
     const [editingQuote, setEditingQuote] = useState({});
     const [formTable, setFormTable] = useState('');
+    const [search, setSearch] = useState('');
     const [quotes, setQuotes] = useState([]);
     const [randomQuote, setRandomQuote] = useState([]);
     const [tags, setTags] = useState([]);
@@ -82,6 +83,10 @@ export default function App() {
         setEditingQuote(quote);
     };
 
+    const handleSearchInput = (event) => {
+        setSearch(event.target.value);
+    };
+
     const mainPageComponent = (
         <>
             <div className="lg:min-w-1/2 sm:w-full">
@@ -89,15 +94,18 @@ export default function App() {
                     <div className="w-full flex items-center">
                         <input
                             type="text"
+                            onChange={handleSearchInput}
                             className="h-4 bg-transparent border border-gray outline-none px-2 py-4 rounded mr-3 flex-grow"
                         />
-                        <div className="cursor-pointer">Search</div>
+                        <div className="cursor-pointer hover:hover:text-[#aaa] transition">
+                            Search
+                        </div>
                     </div>
                 </div>
 
                 <div className="">
                     {quotes ? (
-                        quotes.map((quote) => (
+                        quotes.filter(quote => quote.quote.match(new RegExp(search, 'g'))).map((quote) => (
                             <QuotePreview
                                 quote={quote}
                                 tags={tagsFromQuotes}
@@ -115,7 +123,7 @@ export default function App() {
                 </div>
             </div>
 
-            <div className="lg:max-w-1/2 sm:w-full py-5 flex flex-col gap-5 sm:border-t sm:border-gray">
+            <div className="lg:max-w-[350px] sm:w-full py-5 flex flex-col gap-5 sm:border-t sm:border-gray">
                 <div className="">
                     <span className="font-semibold">Tags:</span>
                     <div className="flex gap-2 flex-wrap">
