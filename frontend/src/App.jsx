@@ -89,7 +89,7 @@ export default function App() {
 
     const mainPageComponent = (
         <>
-            <div className="lg:min-w-1/2 sm:w-full">
+            <div className="flex flex-col flex-grow sm:w-full">
                 <div className="flex items-center justify-between py-5">
                     <div className="w-full flex items-center">
                         <input
