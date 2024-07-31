@@ -52,8 +52,11 @@ export default function App() {
                 const res = await axios.get('http://localhost:8000/api/all');
                 if (res.data.length) {
                     let tagsObj = {};
-                    res.data.forEach((tag) => {
-                        tagsObj[tag.id] = [...(tagsObj[tag.id] || ''), tag.tag];
+                    res.data.forEach((quote) => {
+                        tagsObj[quote.id] = [
+                            ...(tagsObj[quote.id] || ''),
+                            quote.tag,
+                        ];
                     });
                     setTagsFromQuotes(tagsObj);
                 }
@@ -77,10 +80,17 @@ export default function App() {
         setFormTable('tags');
     };
 
-    const handleEditQuoteBtnClick = (quote) => {
+    const handleEditQuoteBtnClick = (selectedQuote) => {
+        const selectedTags = tagsFromQuotes[selectedQuote.id].map(
+            (tagFromQuote) =>
+                tags
+                    .map((tag) => (tag.tag === tagFromQuote ? tag.id : null))
+                    .filter((id) => id != null)[0]
+        );
+        selectedQuote = { ...selectedQuote, tags: selectedTags };
         setIsEditing(true);
         setFormTable('quotes');
-        setEditingQuote(quote);
+        setEditingQuote(selectedQuote);
     };
 
     const handleSearchInput = (event) => {
@@ -105,16 +115,20 @@ export default function App() {
 
                 <div className="">
                     {quotes ? (
-                        quotes.filter(quote => quote.quote.match(new RegExp(search, 'g'))).map((quote) => (
-                            <QuotePreview
-                                quote={quote}
-                                tags={tagsFromQuotes}
-                                handleEditQuoteBtnClick={
-                                    handleEditQuoteBtnClick
-                                }
-                                key={quote.id}
-                            />
-                        ))
+                        quotes
+                            .filter((quote) =>
+                                quote.quote.match(new RegExp(search, 'g'))
+                            )
+                            .map((quote) => (
+                                <QuotePreview
+                                    quote={quote}
+                                    tags={tagsFromQuotes}
+                                    handleEditQuoteBtnClick={
+                                        handleEditQuoteBtnClick
+                                    }
+                                    key={quote.id}
+                                />
+                            ))
                     ) : (
                         <div className="py-5 border-t border-gray">
                             No quotes found

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Checkbox from './Checkbox';
 
@@ -9,6 +9,7 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
             ? {
                   quote: isEditing ? editingQuote.quote : '',
                   author: isEditing ? editingQuote.author : '',
+                  tags: isEditing ? editingQuote.tags : [],
               }
             : table == 'tags'
               ? {
@@ -17,11 +18,22 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
               : {};
 
     const checkboxesObj = tags.map((tag) => {
-        return { tag: tag.tag, checked: false };
+        let checkedBool = false;
+        if(isEditing) {
+            checkedBool = editingQuote.tags.includes(tag.id);
+        }
+        return { id: tag.id, tag: tag.tag, checked: checkedBool };
     });
 
     const [data, setData] = useState(values);
     const [checkboxes, setCheckboxes] = useState(checkboxesObj);
+
+    useEffect(() => {
+        const selectedCheckboxes = checkboxes
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => checkbox.id);
+        setData({ ...data, tags: selectedCheckboxes });
+    }, [checkboxes]);
 
     const handleInput = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
@@ -29,11 +41,11 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
 
     const handleCheck = (index) => {
         setCheckboxes(
-            checkboxes.map((checkbox, curId) => {
+            checkboxes.map((checkbox, curId) =>
                 curId === index
                     ? { ...checkbox, checked: !checkbox.checked }
-                    : checkbox; // NOT WORKING HERE
-            })
+                    : checkbox
+            )
         );
     };
 
@@ -84,7 +96,7 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
                 </div>
 
                 <div className="w-[360px] flex flex-wrap gap-3">
-                    {checkboxesObj.map((checkbox, id) => (
+                    {checkboxes.map((checkbox, id) => (
                         <Checkbox
                             key={id}
                             tag={checkbox.tag}
