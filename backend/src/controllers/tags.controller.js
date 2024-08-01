@@ -2,7 +2,7 @@ import { db } from '../database/db.js';
 
 export const getTags = async (_req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM tags');
+        const [rows] = await db.query('SELECT * FROM tags ORDER BY id');
 
         if (rows.length == 0) {
             return res.json({ message: 'No tags found' });
