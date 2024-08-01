@@ -81,6 +81,11 @@ export default function App() {
         setFormTable('tags');
     };
 
+    const handleEditTagsBtnClick = () => {
+        setIsEditing(true);
+        setFormTable('tags');
+    }
+
     const handleEditQuoteBtnClick = (selectedQuote) => {
         let selectedTags = [];
         if (tagsFromQuotes[selectedQuote.id]) {
@@ -184,7 +189,7 @@ export default function App() {
                 </div>
             </div>
 
-            <div className="lg:min-w-[270px] lg:max-w-[270px] sm:w-full py-5 flex flex-col gap-5 sm:order-first sm:border-t sm:border-gray">
+            <div className="lg:min-w-[290px] lg:max-w-[270px] sm:w-full py-5 flex flex-col gap-5 sm:order-first sm:border-t sm:border-gray">
                 <div className="">
                     <span className="block mb-2 font-semibold">Tags:</span>
                     <div className="flex gap-2 flex-wrap">
@@ -211,6 +216,7 @@ export default function App() {
                         action="Add Quote"
                     />
                     <Button onClick={handleAddTagBtnClick} action="Add Tag" />
+                    <Button onClick={handleEditTagsBtnClick} action="Edit Tags" />
                 </div>
             </div>
         </>

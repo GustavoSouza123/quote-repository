@@ -19,13 +19,14 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
 
     const checkboxesObj = tags.map((tag) => {
         let checkedBool = false;
-        if(isEditing) {
+        if (isEditing && table == 'quotes') {
             checkedBool = editingQuote.tags.includes(tag.id);
         }
         return { id: tag.id, tag: tag.tag, checked: checkedBool };
     });
 
     const [data, setData] = useState(values);
+    const [tagsData, setTagsData] = useState([]);
     const [checkboxes, setCheckboxes] = useState(checkboxesObj);
 
     useEffect(() => {
@@ -37,6 +38,33 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
 
     const handleInput = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
+    };
+
+    const handleTagsInput = (event, index) => {
+        const updatedTag = {
+            id: index,
+            tag: event.target.value,
+        };
+
+        let updatedTags = [...tagsData];
+
+        if (tagsData.length == 0) {
+            updatedTags.push(updatedTag);
+        } else {
+            const newTag = updatedTags.every((tag) => tag.id != index);
+            if (!newTag) {
+                updatedTags = tagsData.map((tag) => {
+                    if (tag.id === index) {
+                        return updatedTag;
+                    }
+                    return tag;
+                });
+            } else {
+                updatedTags.push(updatedTag);
+            }
+        }
+
+        setTagsData(updatedTags);
     };
 
     const handleCheck = (index) => {
@@ -53,18 +81,40 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
         event.preventDefault();
 
         if (isEditing) {
-            await axios
-                .put(
-                    `http://localhost:8000/api/${table}/${editingQuote.id}`,
-                    data
-                )
-                .then(() => location.reload())
-                .catch((error) => console.log(error));
+            if (table == 'tags') {
+                tagsData.forEach(async (tag) => {
+                    await axios
+                        .put(`http://localhost:8000/api/tags/${tag.id}`, {
+                            tag: tag.tag,
+                        })
+                        .then(() => location.reload())
+                        .catch((error) => console.log(error));
+                });
+            } else {
+                await axios
+                    .put(
+                        `http://localhost:8000/api/quotes/${editingQuote.id}`,
+                        data
+                    )
+                    .then(() => location.reload())
+                    .catch((error) => console.log(error));
+            }
         } else {
             await axios
                 .post(`http://localhost:8000/api/${table}`, data)
                 .then(() => location.reload())
                 .catch((error) => console.log(error));
+        }
+    };
+
+    const handleDeleteTag = async (index) => {
+        try {
+            if (confirm(`Do you want to delete tag ${index}?`)) {
+                await axios.delete(`http://localhost:8000/api/tags/${index}`);
+                location.reload();
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -107,9 +157,29 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
                 </div>
             </>
         ) : table == 'tags' ? (
-            <>
-                <div className="w-[340px] flex justify-between items-center">
-                    <label htmlFor="quote">Tag</label>
+            isEditing ? (
+                tags.map((tag) => (
+                    <div className="flex items-center gap-5" key={tag.id}>
+                        <label htmlFor="tag">Tag {tag.id}</label>
+                        <input
+                            type="text"
+                            name="tag"
+                            id="tag"
+                            defaultValue={tag.tag}
+                            onChange={() => handleTagsInput(event, tag.id)}
+                            className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
+                        />
+                        <div
+                            onClick={() => handleDeleteTag(tag.id)}
+                            className="cursor-pointer hover:text-[#aaa] transition"
+                        >
+                            Delete
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <div className="flex justify-between items-center gap-5">
+                    <label htmlFor="tag">Tag</label>
                     <input
                         type="text"
                         name="tag"
@@ -118,7 +188,7 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
                         className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
                     />
                 </div>
-            </>
+            )
         ) : (
             <div>Error</div>
         );
@@ -135,7 +205,7 @@ export default function Form({ table, tags, isEditing, editingQuote }) {
                 <div className="flex justify-center">
                     <input
                         type="submit"
-                        value="Add"
+                        value={isEditing ? 'Update' : 'Add'}
                         className="w-24 bg-blue px-3 py-2 rounded cursor-pointer"
                     />
                 </div>
