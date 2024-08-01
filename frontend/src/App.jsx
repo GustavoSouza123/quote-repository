@@ -109,6 +109,10 @@ export default function App() {
         }
     };
 
+    const handleClearTagClick = () => {
+        setSearchTags([]);
+    };
+
     const filteredQuotes = quotes
         .filter((quote) => quote.quote.match(new RegExp(search, 'g')))
         .filter((quote) => {
@@ -137,16 +141,24 @@ export default function App() {
                             Search
                         </div>
                     </div>
-                    <div className="flex flex-wrap gap-5 text-sm">
-                        <div className="">
-                            Search results:
-                            <span className="ml-1">{search || '-'}</span>
+                    <div className="flex justify-between text-sm">
+                        <div className="flex flex-wrap gap-5">
+                            <div className="">
+                                Search results:
+                                <span className="ml-1">{search || '-'}</span>
+                            </div>
+                            <div className="">
+                                Tags:
+                                <span className="ml-1">
+                                    {searchTags.join(', ') || 'All'}
+                                </span>
+                            </div>
                         </div>
-                        <div className="">
-                            Tags:
-                            <span className="ml-1">
-                                {searchTags.join(', ') || 'All'}
-                            </span>
+                        <div
+                            className="flex items-center justify-end w-24 cursor-pointer"
+                            onClick={handleClearTagClick}
+                        >
+                            Clear filters
                         </div>
                     </div>
                 </div>
