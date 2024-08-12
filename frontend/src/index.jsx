@@ -1,12 +1,44 @@
 import React from 'react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(
+import App from './App';
+import Error from './components/Error';
+import Quotes from './components/Quotes';
+import QuoteContent, { loader as quoteLoader } from './components/QuoteContent';
+import Form from './components/Form';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+        errorElement: <Error />,
+        children: [
+            {
+                errorElement: <Error />,
+                children: [
+                    {
+                        index: true,
+                        element: <Quotes />,
+                    },
+                    {
+                        path: 'quotes/:quoteId',
+                        element: <QuoteContent />,
+                        loader: quoteLoader,
+                    },
+                    {
+                        path: 'quotes/:quoteId/edit',
+                        element: <Form />,
+                    },
+                ],
+            },
+        ],
+    },
+]);
+
+createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <App />
+        <RouterProvider router={router} />
     </StrictMode>
 );
