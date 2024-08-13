@@ -6,7 +6,7 @@ import './css/index.css';
 
 import Title from './components/Title';
 import RandomQuote from './components/RandomQuote';
-import Form from './components/Form';
+import Form from './components/OldForm';
 
 export default function App() {
     const [isAdding, setIsAdding] = useState(false);

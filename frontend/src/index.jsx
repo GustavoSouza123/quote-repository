@@ -30,6 +30,7 @@ const router = createBrowserRouter([
                     {
                         path: 'quotes/:quoteId/edit',
                         element: <Form />,
+                        loader: quoteLoader,
                     },
                 ],
             },
