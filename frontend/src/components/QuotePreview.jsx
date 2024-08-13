@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import dots from '../assets/dots.svg';
 
-export default function QuotePreview({ quote, tags, handleTagClick, handleEditQuoteBtnClick }) {
+export default function QuotePreview({ quote, tags, onClick, handleTagClick, handleEditQuoteBtnClick }) {
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
 
@@ -36,6 +36,7 @@ export default function QuotePreview({ quote, tags, handleTagClick, handleEditQu
     return (
         <div
             className="relative flex flex-col gap-1 justify-between py-5 border-t border-gray hover:bg-hover transition"
+            onClick={onClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >

@@ -15,17 +15,16 @@ export async function loader({ params }) {
 
 export default function QuoteContent() {
     const { quote } = useLoaderData();
-    console.log(quote);
 
     return (
         <div className="flex flex-col">
             <div className="">
                 {quote.data.map((quote) => (
-                    <>
+                    <div key={quote.id}>
                         <p>{quote.id}</p>
                         <p>{quote.quote}</p>
                         <p>{quote.author}</p>
-                    </>
+                    </div>
                 ))}
             </div>
         </div>

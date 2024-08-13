@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import QuotePreview from './QuotePreview';
 // import QuoteContent from './QuoteContent';
 
 export default function Quotes() {
+    const navigate = useNavigate();
+
     const [isAdding, setIsAdding] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingQuote, setEditingQuote] = useState({});
@@ -170,6 +173,7 @@ export default function Quotes() {
                             <QuotePreview
                                 quote={quote}
                                 tags={tagsFromQuotes}
+                                onClick={() => navigate(`/quotes/${quote.id}`)}
                                 handleTagClick={handleTagClick}
                                 handleEditQuoteBtnClick={
                                     handleEditQuoteBtnClick
