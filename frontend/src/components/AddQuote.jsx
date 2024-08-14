@@ -67,6 +67,7 @@ export default function AddQuote() {
                 onSubmit={handleSubmit}
             >
                 <div className="">Add quote</div>
+                
                 <div className="w-[360px] flex justify-between items-center">
                     <label htmlFor="quote">Quote</label>
                     <textarea

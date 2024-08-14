@@ -76,6 +76,7 @@ export default function Quotes() {
     };
 
     const handleAddTagBtnClick = () => {
+        navigate('tags/add');
         // setIsAdding(true);
         // setFormTable('tags');
     };
