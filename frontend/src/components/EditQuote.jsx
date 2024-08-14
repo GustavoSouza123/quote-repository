@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Checkbox from './Checkbox';
 
-export default function Form() {
+export default function EditQuote() {
     const { quote, tags, tagsFromQuotes } = useLoaderData();
     const navigate = useNavigate();
 
@@ -130,8 +130,7 @@ export default function Form() {
             <div className="flex justify-center">
                 <input
                     type="submit"
-                    // value={isEditing ? 'Update' : 'Add'}
-                    value="Add"
+                    value="Update"
                     className="w-24 bg-blue px-3 py-2 rounded cursor-pointer"
                 />
             </div>

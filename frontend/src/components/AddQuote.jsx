@@ -37,10 +37,6 @@ export default function AddQuote() {
         setData({ ...data, tags: selectedCheckboxes });
     }, [checkboxes]);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-
     const handleInput = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
     };
@@ -107,7 +103,6 @@ export default function AddQuote() {
                 <div className="flex justify-center">
                     <input
                         type="submit"
-                        // value={isEditing ? 'Update' : 'Add'}
                         value="Add"
                         className="w-24 bg-blue px-3 py-2 rounded cursor-pointer"
                     />

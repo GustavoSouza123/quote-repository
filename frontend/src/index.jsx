@@ -8,7 +8,7 @@ import Error from './components/Error';
 import Quotes from './components/Quotes';
 import QuoteContent, { loader as quoteLoader } from './components/QuoteContent';
 import AddQuote, { loader as addQuoteLoader } from './components/AddQuote';
-import EditQuote from './components/EditQuote,';
+import EditQuote from './components/EditQuote';
 
 const router = createBrowserRouter([
     {

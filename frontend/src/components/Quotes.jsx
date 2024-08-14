@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import QuotePreview from './QuotePreview';
-// import QuoteContent from './QuoteContent';
 
 export default function Quotes() {
     const navigate = useNavigate();
