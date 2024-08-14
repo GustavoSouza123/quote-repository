@@ -95,7 +95,7 @@ export default function Quotes() {
                             tag.tag === tagFromQuote ? tag.id : null
                         )
                         .filter((id) => id != null)[0]
-            );
+                    );
         }
         selectedQuote = { ...selectedQuote, tags: selectedTags };
         setIsEditing(true);

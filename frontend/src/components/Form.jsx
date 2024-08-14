@@ -6,8 +6,6 @@ import { useLoaderData } from "react-router-dom";
 export default function Form() {
     const { quote } = useLoaderData();
 
-    console.log(quote.data)
-
     return (
         <form
             className="w-full flex flex-col items-center gap-5 py-10"
@@ -20,7 +18,7 @@ export default function Form() {
                     name="quote"
                     id="quote"
                     rows={6}
-                    // defaultValue={quote.data.quote}
+                    defaultValue={quote.data[0].quote}
                     // onChange={handleInput}
                     className="w-80 bg-transparent border border-gray outline-none p-2 rounded resize-none"
                 ></textarea>
@@ -32,7 +30,7 @@ export default function Form() {
                     type="text"
                     name="author"
                     id="author"
-                    // defaultValue={quote.data.author}
+                    defaultValue={quote.data[0].author}
                     // onChange={handleInput}
                     className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
                 />

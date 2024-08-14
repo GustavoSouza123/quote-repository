@@ -1,11 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import dots from '../assets/dots.svg';
 
-export default function QuotePreview({ quote, tags, onClick, handleTagClick, handleEditQuoteBtnClick }) {
+export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
+    const navigate = useNavigate();
+
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
+
+    const handleEditQuoteBtnClick = (e) => {
+        e.stopPropagation();
+        navigate(`/quotes/${quote.id}/edit`);
+    };
 
     const handleDeleteQuoteBtnClick = async () => {
         try {
@@ -20,7 +28,8 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick, han
         }
     };
 
-    const handleClick = () => {
+    const handleDotsClick = (e) => {
+        e.stopPropagation();
         setClick(true);
     };
 
@@ -47,7 +56,9 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick, han
                     tags[quote.id].map((tag, id) => (
                         <div
                             className="cursor-pointer underline font-light"
-                            onClick={() => {handleTagClick(tag)}}
+                            onClick={() => {
+                                handleTagClick(tag);
+                            }}
                             key={id}
                         >
                             {tag}
@@ -63,14 +74,15 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick, han
                     className="w-6 cursor-pointer"
                     src={dots}
                     alt="More options"
-                    onClick={handleClick}
+                    onClick={(event) => handleDotsClick(event)}
                 />
             </div>
             <div
                 className={`absolute bottom-5 right-5 ${click ? 'flex' : 'hidden'} gap-5 justify-center items-center`}
             >
                 <div
-                    onClick={() => handleEditQuoteBtnClick(quote)}
+                    // onClick={() => handleEditQuoteBtnClick(quote)}
+                    onClick={(event) => handleEditQuoteBtnClick(event)}
                     className="cursor-pointer hover:hover:text-[#aaa] transition"
                 >
                     Edit
