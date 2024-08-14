@@ -25,7 +25,6 @@ export default function Form() {
     });
 
     const [data, setData] = useState(values);
-    const [tagsData, setTagsData] = useState([]);
     const [checkboxes, setCheckboxes] = useState(checkboxesObj);
 
     useEffect(() => {
@@ -93,8 +92,6 @@ export default function Form() {
             method="post"
             onSubmit={handleSubmit}
         >
-            <h1>my form</h1>
-
             <div className="w-[360px] flex justify-between items-center">
                 <label htmlFor="quote">Quote</label>
                 <textarea

@@ -71,37 +71,38 @@ export default function Quotes() {
     }, []);
 
     const handleAddQuoteBtnClick = () => {
-        setIsAdding(true);
-        setFormTable('quotes');
+        navigate('quotes/add');
+        // setIsAdding(true);
+        // setFormTable('quotes');
     };
 
     const handleAddTagBtnClick = () => {
-        setIsAdding(true);
-        setFormTable('tags');
+        // setIsAdding(true);
+        // setFormTable('tags');
     };
 
     const handleEditTagsBtnClick = () => {
-        setIsEditing(true);
-        setFormTable('tags');
-    }
-
-    const handleEditQuoteBtnClick = (selectedQuote) => {
-        let selectedTags = [];
-        if (tagsFromQuotes[selectedQuote.id]) {
-            selectedTags = tagsFromQuotes[selectedQuote.id].map(
-                (tagFromQuote) =>
-                    tags
-                        .map((tag) =>
-                            tag.tag === tagFromQuote ? tag.id : null
-                        )
-                        .filter((id) => id != null)[0]
-                    );
-        }
-        selectedQuote = { ...selectedQuote, tags: selectedTags };
-        setIsEditing(true);
-        setFormTable('quotes');
-        setEditingQuote(selectedQuote);
+        // setIsEditing(true);
+        // setFormTable('tags');
     };
+
+    // const handleEditQuoteBtnClick = (selectedQuote) => {
+    //     let selectedTags = [];
+    //     if (tagsFromQuotes[selectedQuote.id]) {
+    //         selectedTags = tagsFromQuotes[selectedQuote.id].map(
+    //             (tagFromQuote) =>
+    //                 tags
+    //                     .map((tag) =>
+    //                         tag.tag === tagFromQuote ? tag.id : null
+    //                     )
+    //                     .filter((id) => id != null)[0]
+    //                 );
+    //     }
+    //     selectedQuote = { ...selectedQuote, tags: selectedTags };
+    //     setIsEditing(true);
+    //     setFormTable('quotes');
+    //     setEditingQuote(selectedQuote);
+    // };
 
     const handleSearchInput = (event) => {
         setSearch(event.target.value);
@@ -173,7 +174,6 @@ export default function Quotes() {
                             <QuotePreview
                                 quote={quote}
                                 tags={tagsFromQuotes}
-                                onClick={() => navigate(`/quotes/${quote.id}`)}
                                 handleTagClick={handleTagClick}
                                 key={quote.id}
                             />
@@ -213,7 +213,10 @@ export default function Quotes() {
                         action="Add Quote"
                     />
                     <Button onClick={handleAddTagBtnClick} action="Add Tag" />
-                    <Button onClick={handleEditTagsBtnClick} action="Edit Tags" />
+                    <Button
+                        onClick={handleEditTagsBtnClick}
+                        action="Edit Tags"
+                    />
                 </div>
             </div>
         </>

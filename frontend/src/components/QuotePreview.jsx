@@ -4,11 +4,15 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import dots from '../assets/dots.svg';
 
-export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
+export default function QuotePreview({ quote, tags, handleTagClick }) {
     const navigate = useNavigate();
 
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
+
+    const handleQuoteClick = () => {
+        navigate(`/quotes/${quote.id}`);
+    }
 
     const handleDotsClick = (e) => {
         e.stopPropagation();
@@ -46,7 +50,7 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
     return (
         <div
             className="relative flex flex-col gap-1 justify-between py-5 border-t border-gray hover:bg-hover transition"
-            onClick={onClick}
+            onClick={handleQuoteClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >

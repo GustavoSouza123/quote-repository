@@ -7,7 +7,8 @@ import App from './App';
 import Error from './components/Error';
 import Quotes from './components/Quotes';
 import QuoteContent, { loader as quoteLoader } from './components/QuoteContent';
-import Form from './components/Form';
+import AddQuote, { loader as addQuoteLoader } from './components/AddQuote';
+import EditQuote from './components/EditQuote,';
 
 const router = createBrowserRouter([
     {
@@ -28,9 +29,20 @@ const router = createBrowserRouter([
                         loader: quoteLoader,
                     },
                     {
+                        path: 'quotes/add',
+                        element: <AddQuote />,
+                        loader: addQuoteLoader,
+                    },
+                    {
                         path: 'quotes/:quoteId/edit',
-                        element: <Form />,
-                        loader: quoteLoader
+                        element: <EditQuote />,
+                        loader: quoteLoader,
+                    },
+                    {
+                        path: 'tags/add',
+                    },
+                    {
+                        path: 'tags/edit',
                     },
                 ],
             },
