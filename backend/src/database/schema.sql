@@ -28,5 +28,6 @@ CREATE TABLE quotes_tags (
 -- INSERT INTO quotes (quote, author) VALUES ('my first quote', 'Albert Einstein');
 -- INSERT INTO quotes (quote, author) VALUES ('a random quote from the former president of the USA', 'Donald Trump');
 -- INSERT INTO quotes (quote, author) VALUES ('a quote from myself', 'Gustavo Souza');
--- INSERT INTO tags (tag) VALUES ('Albert Einstein');
--- INSERT INTO tags (tag) VALUES ('Gustavo Souza');
+-- INSERT INTO quotes (quote, author) VALUES ('a super inspirational quote from the former president of the USA', 'Joe Biden');
+-- INSERT INTO tags (tag) VALUES ('Albert Einstein'), ('Gustavo Souza');
+-- INSERT INTO quotes_tags (quoteId, tagId) VALUES (1, 1), (1, 2), (2, 2), (3, 1), (3, 3);
