@@ -14,8 +14,9 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
         e.stopPropagation();
         navigate(`/quotes/${quote.id}/edit`);
     };
-
-    const handleDeleteQuoteBtnClick = async () => {
+    
+    const handleDeleteQuoteBtnClick = async (e) => {
+        e.stopPropagation();
         try {
             if (confirm(`Do you want to delete quote ${quote.id}?`)) {
                 await axios.delete(
@@ -88,7 +89,7 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
                     Edit
                 </div>
                 <div
-                    onClick={handleDeleteQuoteBtnClick}
+                    onClick={(event) => handleDeleteQuoteBtnClick(event)}
                     className="cursor-pointer hover:text-[#aaa] transition"
                 >
                     Delete

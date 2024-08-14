@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 // import axios from "axios";
 import { useLoaderData } from "react-router-dom";
+import Checkbox from "./Checkbox";
 
 export default function Form() {
-    const { quote } = useLoaderData();
+    const { quote, tags, tagsFromQuotes } = useLoaderData();
 
     return (
         <form
@@ -18,7 +19,7 @@ export default function Form() {
                     name="quote"
                     id="quote"
                     rows={6}
-                    defaultValue={quote.data[0].quote}
+                    defaultValue={quote.quote}
                     // onChange={handleInput}
                     className="w-80 bg-transparent border border-gray outline-none p-2 rounded resize-none"
                 ></textarea>
@@ -30,19 +31,18 @@ export default function Form() {
                     type="text"
                     name="author"
                     id="author"
-                    defaultValue={quote.data[0].author}
+                    defaultValue={quote.author}
                     // onChange={handleInput}
                     className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
                 />
             </div>
 
             <div className="w-[360px] flex flex-wrap gap-3">
-                <p>//checkboxes</p>
-                {/* {checkboxes.map((checkbox, id) => (
+                {/* {tags.map((tag, id) => (
                     <Checkbox
                         key={id}
-                        tag={checkbox.tag}
-                        isChecked={checkbox.checked}
+                        tag={tag.tag}
+                        isChecked={tag.checked}
                         handleCheck={() => handleCheck(id)}
                     />
                 ))} */}

@@ -8,6 +8,19 @@ export async function loader({ params }) {
             `http://localhost:8000/api/quotes/${params.quoteId}`
         );
 
+        const tags = await axios.get('http://localhost:8000/api/tags');
+
+        const res = await axios.get('http://localhost:8000/api/all');
+        let tagsFromQuotes = {};
+        if (res.data.length) {
+            res.data.forEach((quote) => {
+                tagsFromQuotes[quote.id] = [
+                    ...(tagsFromQuotes[quote.id] || ''),
+                    quote.tag,
+                ];
+            });
+        }
+
         /* the code below generate the following error:
         "You defined a loader for route "0-0-1" but didn't return anything from your `loader` 
             function. Please return a value or `null`." */
@@ -17,27 +30,42 @@ export async function loader({ params }) {
         //         statusText: 'Not Found',
         //     });
         // }
-        
-        return { quote };
+
+        return {
+            quote: quote.data[0],
+            tags: tags.data,
+            tagsFromQuotes: tagsFromQuotes[quote.data[0].id],
+        };
     } catch (error) {
         console.log(error);
     }
 }
 
 export default function QuoteContent() {
-    const { quote } = useLoaderData();
-    console.log(quote.data[0])
+    const { quote, tags, tagsFromQuotes } = useLoaderData();
 
     return (
         <div className="flex flex-col">
             <div className="">
-                {quote.data.map((quote) => (
-                    <div key={quote.id}>
-                        <p>{quote.id}</p>
-                        <p>{quote.quote}</p>
-                        <p>{quote.author}</p>
-                    </div>
-                ))}
+                <p>{quote.id}</p>
+                <p>{quote.quote}</p>
+                <p>{quote.author}</p>
+
+                <div className="flex gap-2">
+                    {tagsFromQuotes ? (
+                        tagsFromQuotes.map((tag, id) => (
+                            <div
+                                className="cursor-pointer underline font-light"
+                                key={id}
+                            >
+                                {tag}
+                                {id + 1 == tagsFromQuotes.length ? '' : ', '}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="">No tags</div>
+                    )}
+                </div>
             </div>
         </div>
     );
