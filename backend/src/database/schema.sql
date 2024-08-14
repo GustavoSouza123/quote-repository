@@ -24,3 +24,9 @@ CREATE TABLE quotes_tags (
     FOREIGN KEY (quoteId) REFERENCES quotes(id),
     FOREIGN KEY (tagId) REFERENCES tags(id)
 );
+
+-- INSERT INTO quotes (quote, author) VALUES ('my first quote', 'Albert Einstein');
+-- INSERT INTO quotes (quote, author) VALUES ('a random quote from the former president of the USA', 'Donald Trump');
+-- INSERT INTO quotes (quote, author) VALUES ('a quote from myself', 'Gustavo Souza');
+-- INSERT INTO tags (tag) VALUES ('Albert Einstein');
+-- INSERT INTO tags (tag) VALUES ('Gustavo Souza');
