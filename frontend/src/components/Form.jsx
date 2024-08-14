@@ -1,11 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-// import axios from "axios";
-import { useLoaderData } from 'react-router-dom';
+import axios from 'axios';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Checkbox from './Checkbox';
 
 export default function Form() {
     const { quote, tags, tagsFromQuotes } = useLoaderData();
+    const navigate = useNavigate();
 
     const values = {
         quote: quote.quote,
@@ -75,12 +76,25 @@ export default function Form() {
         );
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await axios
+            .put(
+                `http://localhost:8000/api/quotes/${quote.id}`,
+                data
+            )
+            .then(() => navigate('/'))
+            .catch((error) => console.log(error));
+    }
+
     return (
         <form
             className="w-full flex flex-col items-center gap-5 py-10"
             method="post"
+            onSubmit={handleSubmit}
         >
             <h1>my form</h1>
+
             <div className="w-[360px] flex justify-between items-center">
                 <label htmlFor="quote">Quote</label>
                 <textarea
@@ -105,7 +119,7 @@ export default function Form() {
                 />
             </div>
 
-            <div className="w-[360px] flex flex-wrap gap-3">
+            <div className="w-[360px] flex justify-center flex-wrap gap-3">
                 {checkboxes.map((checkbox, id) => (
                     <Checkbox
                         key={id}

@@ -10,6 +10,11 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
 
+    const handleDotsClick = (e) => {
+        e.stopPropagation();
+        setClick(true);
+    };
+
     const handleEditQuoteBtnClick = (e) => {
         e.stopPropagation();
         navigate(`/quotes/${quote.id}/edit`);
@@ -29,16 +34,11 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
         }
     };
 
-    const handleDotsClick = (e) => {
-        e.stopPropagation();
-        setClick(true);
-    };
-
-    const handleMouseEnter = (e) => {
+    const handleMouseEnter = () => {
         setDisplay('block');
     };
 
-    const handleMouseLeave = (e) => {
+    const handleMouseLeave = () => {
         setDisplay('hidden');
         setClick(false);
     };
@@ -75,20 +75,20 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
                     className="w-6 cursor-pointer"
                     src={dots}
                     alt="More options"
-                    onClick={(event) => handleDotsClick(event)}
+                    onClick={handleDotsClick}
                 />
             </div>
             <div
                 className={`absolute bottom-5 right-5 ${click ? 'flex' : 'hidden'} gap-5 justify-center items-center`}
             >
                 <div
-                    onClick={(event) => handleEditQuoteBtnClick(event)}
+                    onClick={handleEditQuoteBtnClick}
                     className="cursor-pointer hover:hover:text-[#aaa] transition"
                 >
                     Edit
                 </div>
                 <div
-                    onClick={(event) => handleDeleteQuoteBtnClick(event)}
+                    onClick={handleDeleteQuoteBtnClick}
                     className="cursor-pointer hover:text-[#aaa] transition"
                 >
                     Delete
