@@ -16,7 +16,7 @@ export async function loader({ params }) {
             res.data.forEach((quote) => {
                 tagsFromQuotes[quote.id] = [
                     ...(tagsFromQuotes[quote.id] || ''),
-                    quote.tag,
+                    { tagId: quote.tagId, tag: quote.tag, }
                 ];
             });
         }
@@ -34,7 +34,7 @@ export async function loader({ params }) {
         return {
             quote: quote.data[0],
             tags: tags.data,
-            tagsFromQuotes: tagsFromQuotes[quote.data[0].id],
+            tagsFromQuotes: tagsFromQuotes[quote.data[0].id] || [],
         };
     } catch (error) {
         console.log(error);
@@ -58,7 +58,7 @@ export default function QuoteContent() {
                                 className="cursor-pointer underline font-light"
                                 key={id}
                             >
-                                {tag}
+                                {tag.tag}
                                 {id + 1 == tagsFromQuotes.length ? '' : ', '}
                             </div>
                         ))

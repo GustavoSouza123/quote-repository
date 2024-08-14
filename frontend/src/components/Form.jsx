@@ -1,11 +1,79 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React from 'react';
+import { useState, useEffect } from 'react';
 // import axios from "axios";
-import { useLoaderData } from "react-router-dom";
-import Checkbox from "./Checkbox";
+import { useLoaderData } from 'react-router-dom';
+import Checkbox from './Checkbox';
 
 export default function Form() {
     const { quote, tags, tagsFromQuotes } = useLoaderData();
+
+    const values = {
+        quote: quote.quote,
+        author: quote.author,
+        tags: tagsFromQuotes.map((tag) => tag.tagId),
+    };
+
+    const checkboxesObj = tags.map((tag) => {
+        let checkedBool = false;
+        checkedBool =
+            tagsFromQuotes.length &&
+            tagsFromQuotes.findIndex(
+                (tagsFromQuote) => tagsFromQuote.tagId === tag.id
+            ) >= 0;
+        return { id: tag.id, tag: tag.tag, checked: checkedBool };
+    });
+
+    const [data, setData] = useState(values);
+    const [tagsData, setTagsData] = useState([]);
+    const [checkboxes, setCheckboxes] = useState(checkboxesObj);
+
+    useEffect(() => {
+        const selectedCheckboxes = checkboxes
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => checkbox.id);
+        setData({ ...data, tags: selectedCheckboxes });
+    }, [checkboxes]);
+
+    const handleInput = (event) => {
+        setData({ ...data, [event.target.name]: event.target.value });
+    };
+
+    // const handleTagsInput = (event, index) => {
+    //     const updatedTag = {
+    //         id: index,
+    //         tag: event.target.value,
+    //     };
+
+    //     let updatedTags = [...tagsData];
+
+    //     if (tagsData.length == 0) {
+    //         updatedTags.push(updatedTag);
+    //     } else {
+    //         const newTag = updatedTags.every((tag) => tag.id != index);
+    //         if (!newTag) {
+    //             updatedTags = tagsData.map((tag) => {
+    //                 if (tag.id === index) {
+    //                     return updatedTag;
+    //                 }
+    //                 return tag;
+    //             });
+    //         } else {
+    //             updatedTags.push(updatedTag);
+    //         }
+    //     }
+
+    //     setTagsData(updatedTags);
+    // };
+
+    const handleCheck = (index) => {
+        setCheckboxes(
+            checkboxes.map((checkbox, curId) =>
+                curId === index
+                    ? { ...checkbox, checked: !checkbox.checked }
+                    : checkbox
+            )
+        );
+    };
 
     return (
         <form
@@ -20,7 +88,7 @@ export default function Form() {
                     id="quote"
                     rows={6}
                     defaultValue={quote.quote}
-                    // onChange={handleInput}
+                    onChange={handleInput}
                     className="w-80 bg-transparent border border-gray outline-none p-2 rounded resize-none"
                 ></textarea>
             </div>
@@ -32,26 +100,27 @@ export default function Form() {
                     name="author"
                     id="author"
                     defaultValue={quote.author}
-                    // onChange={handleInput}
+                    onChange={handleInput}
                     className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
                 />
             </div>
 
             <div className="w-[360px] flex flex-wrap gap-3">
-                {/* {tags.map((tag, id) => (
+                {checkboxes.map((checkbox, id) => (
                     <Checkbox
                         key={id}
-                        tag={tag.tag}
-                        isChecked={tag.checked}
+                        tag={checkbox.tag}
+                        isChecked={checkbox.checked}
                         handleCheck={() => handleCheck(id)}
                     />
-                ))} */}
+                ))}
             </div>
 
             <div className="flex justify-center">
                 <input
                     type="submit"
                     // value={isEditing ? 'Update' : 'Add'}
+                    value="Add"
                     className="w-24 bg-blue px-3 py-2 rounded cursor-pointer"
                 />
             </div>

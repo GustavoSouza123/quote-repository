@@ -175,9 +175,6 @@ export default function Quotes() {
                                 tags={tagsFromQuotes}
                                 onClick={() => navigate(`/quotes/${quote.id}`)}
                                 handleTagClick={handleTagClick}
-                                handleEditQuoteBtnClick={
-                                    handleEditQuoteBtnClick
-                                }
                                 key={quote.id}
                             />
                         ))

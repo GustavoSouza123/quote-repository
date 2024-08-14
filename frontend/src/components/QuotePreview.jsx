@@ -82,7 +82,6 @@ export default function QuotePreview({ quote, tags, onClick, handleTagClick }) {
                 className={`absolute bottom-5 right-5 ${click ? 'flex' : 'hidden'} gap-5 justify-center items-center`}
             >
                 <div
-                    // onClick={() => handleEditQuoteBtnClick(quote)}
                     onClick={(event) => handleEditQuoteBtnClick(event)}
                     className="cursor-pointer hover:hover:text-[#aaa] transition"
                 >
