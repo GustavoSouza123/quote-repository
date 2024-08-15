@@ -38,7 +38,7 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
         try {
             if (confirm(`Do you want to delete quote ${quote.id}?`)) {
                 await axios.delete(
-                    `http://localhost:8000/api/quotes/${quote.id}`
+                    `${import.meta.env.VITE_QUOTES_API}api/quotes/${quote.id}`
                 );
                 location.reload();
             }
@@ -56,7 +56,7 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
         >
             <div className="pr-10">“{quote.quote}”</div>
             <div className="">– {quote.author}</div>
-            <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-wrap gap-2" onClick={(e) => e.stopPropagation()}>
                 {tags[quote.id] ? (
                     tags[quote.id].map((tag, id) => (
                         <div

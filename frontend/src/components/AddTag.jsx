@@ -19,7 +19,7 @@ export default function AddQuote() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await axios
-            .post(`http://localhost:8000/api/tags/`, data)
+            .post(`${import.meta.env.VITE_QUOTES_API}api/tags/`, data)
             .then(() => navigate('/'))
             .catch((error) => console.log(error));
     };

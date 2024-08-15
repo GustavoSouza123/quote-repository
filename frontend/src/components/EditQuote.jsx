@@ -52,7 +52,7 @@ export default function EditQuote() {
         e.preventDefault();
         await axios
             .put(
-                `http://localhost:8000/api/quotes/${quote.id}`,
+                `${import.meta.env.VITE_QUOTES_API}api/quotes/${quote.id}`,
                 data
             )
             .then(() => navigate('/'))

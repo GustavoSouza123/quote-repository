@@ -5,7 +5,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export async function loader() {
     try {
-        const tags = await axios.get('http://localhost:8000/api/tags');
+        const tags = await axios.get(`${import.meta.env.VITE_QUOTES_API}api/tags`);
         return { tags: tags.data };
     } catch (error) {
         console.log(error);
@@ -48,7 +48,7 @@ export default function EditTags() {
     const handleDeleteTag = async (index) => {
         try {
             if (confirm(`Do you want to delete tag ${index}?`)) {
-                await axios.delete(`http://localhost:8000/api/tags/${index}`);
+                await axios.delete(`${import.meta.env.VITE_QUOTES_API}api/tags/${index}`);
                 location.reload();
             }
         } catch (error) {
@@ -60,7 +60,7 @@ export default function EditTags() {
         e.preventDefault();
         tagsData.forEach(async (tag) => {
             await axios
-                .put(`http://localhost:8000/api/tags/${tag.id}`, {
+                .put(`${import.meta.env.VITE_QUOTES_API}api/tags/${tag.id}`, {
                     tag: tag.tag,
                 })
                 .then(() => location.reload())

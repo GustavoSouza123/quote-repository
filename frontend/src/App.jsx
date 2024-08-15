@@ -13,7 +13,7 @@ export default function App() {
     useEffect(() => {
         const getRandomQuote = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/quotes');
+                const res = await axios.get(`${import.meta.env.VITE_QUOTES_API}api/quotes`);
                 if (res.data.length) {
                     setRandomQuote(
                         res.data[Math.floor(Math.random() * res.data.length)]

@@ -5,18 +5,22 @@ import { useLoaderData } from 'react-router-dom';
 export async function loader({ params }) {
     try {
         const quote = await axios.get(
-            `http://localhost:8000/api/quotes/${params.quoteId}`
+            `${import.meta.env.VITE_QUOTES_API}api/quotes/${params.quoteId}`
         );
 
-        const tags = await axios.get('http://localhost:8000/api/tags');
+        const tags = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/tags`
+        );
 
-        const res = await axios.get('http://localhost:8000/api/all');
+        const res = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/all`
+        );
         let tagsFromQuotes = {};
         if (res.data.length) {
             res.data.forEach((quote) => {
                 tagsFromQuotes[quote.id] = [
                     ...(tagsFromQuotes[quote.id] || ''),
-                    { tagId: quote.tagId, tag: quote.tag, }
+                    { tagId: quote.tagId, tag: quote.tag },
                 ];
             });
         }
@@ -51,7 +55,7 @@ export default function QuoteContent() {
                 <p>{quote.quote}</p>
                 <p>{quote.author}</p>
 
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     {tagsFromQuotes ? (
                         tagsFromQuotes.map((tag, id) => (
                             <div

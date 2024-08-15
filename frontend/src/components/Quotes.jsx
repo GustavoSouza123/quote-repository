@@ -8,11 +8,17 @@ import QuotePreview from './QuotePreview';
 
 export async function loader() {
     try {
-        const quotes = await axios.get('http://localhost:8000/api/quotes');
+        const quotes = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/quotes`
+        );
 
-        const tags = await axios.get('http://localhost:8000/api/tags');
+        const tags = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/tags`
+        );
 
-        const res = await axios.get('http://localhost:8000/api/all');
+        const res = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/all`
+        );
         let tagsFromQuotes = {};
         if (res.data.length) {
             res.data.forEach((quote) => {

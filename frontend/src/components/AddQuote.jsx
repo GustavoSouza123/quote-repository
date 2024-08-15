@@ -6,7 +6,7 @@ import Checkbox from './Checkbox';
 
 export async function loader() {
     try {
-        const tags = await axios.get('http://localhost:8000/api/tags');
+        const tags = await axios.get(`${import.meta.env.VITE_QUOTES_API}api/tags`);
         return { tags: tags.data };
     } catch (error) {
         console.log(error);
@@ -54,7 +54,7 @@ export default function AddQuote() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await axios
-            .post(`http://localhost:8000/api/quotes/`, data)
+            .post(`${import.meta.env.VITE_QUOTES_API}api/quotes/`, data)
             .then(() => navigate('/'))
             .catch((error) => console.log(error));
     };
