@@ -38,33 +38,6 @@ export default function EditQuote() {
         setData({ ...data, [event.target.name]: event.target.value });
     };
 
-    // const handleTagsInput = (event, index) => {
-    //     const updatedTag = {
-    //         id: index,
-    //         tag: event.target.value,
-    //     };
-
-    //     let updatedTags = [...tagsData];
-
-    //     if (tagsData.length == 0) {
-    //         updatedTags.push(updatedTag);
-    //     } else {
-    //         const newTag = updatedTags.every((tag) => tag.id != index);
-    //         if (!newTag) {
-    //             updatedTags = tagsData.map((tag) => {
-    //                 if (tag.id === index) {
-    //                     return updatedTag;
-    //                 }
-    //                 return tag;
-    //             });
-    //         } else {
-    //             updatedTags.push(updatedTag);
-    //         }
-    //     }
-
-    //     setTagsData(updatedTags);
-    // };
-
     const handleCheck = (index) => {
         setCheckboxes(
             checkboxes.map((checkbox, curId) =>

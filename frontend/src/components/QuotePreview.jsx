@@ -12,7 +12,16 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
 
     const handleQuoteClick = () => {
         navigate(`/quotes/${quote.id}`);
-    }
+    };
+
+    const handleMouseEnter = () => {
+        setDisplay('block');
+    };
+
+    const handleMouseLeave = () => {
+        setDisplay('hidden');
+        setClick(false);
+    };
 
     const handleDotsClick = (e) => {
         e.stopPropagation();
@@ -23,7 +32,7 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
         e.stopPropagation();
         navigate(`/quotes/${quote.id}/edit`);
     };
-    
+
     const handleDeleteQuoteBtnClick = async (e) => {
         e.stopPropagation();
         try {
@@ -36,15 +45,6 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
         } catch (error) {
             console.log(error);
         }
-    };
-
-    const handleMouseEnter = () => {
-        setDisplay('block');
-    };
-
-    const handleMouseLeave = () => {
-        setDisplay('hidden');
-        setClick(false);
     };
 
     return (

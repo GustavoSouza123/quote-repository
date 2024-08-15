@@ -9,16 +9,13 @@ import QuotePreview from './QuotePreview';
 export default function Quotes() {
     const navigate = useNavigate();
 
-    const [isAdding, setIsAdding] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editingQuote, setEditingQuote] = useState({});
-    const [formTable, setFormTable] = useState('');
     const [search, setSearch] = useState('');
     const [searchTags, setSearchTags] = useState([]);
     const [quotes, setQuotes] = useState([]);
-    const [randomQuote, setRandomQuote] = useState([]);
     const [tags, setTags] = useState([]);
     const [tagsFromQuotes, setTagsFromQuotes] = useState({});
+
+    // TO-DO: REPLACE USEEFFECT FUNCTIONS FOR LOADER
 
     useEffect(() => {
         const getQuotes = async () => {
@@ -71,39 +68,15 @@ export default function Quotes() {
 
     const handleAddQuoteBtnClick = () => {
         navigate('quotes/add');
-        // setIsAdding(true);
-        // setFormTable('quotes');
     };
 
     const handleAddTagBtnClick = () => {
         navigate('tags/add');
-        // setIsAdding(true);
-        // setFormTable('tags');
     };
 
     const handleEditTagsBtnClick = () => {
         navigate('tags/edit');
-        // setIsEditing(true);
-        // setFormTable('tags');
     };
-
-    // const handleEditQuoteBtnClick = (selectedQuote) => {
-    //     let selectedTags = [];
-    //     if (tagsFromQuotes[selectedQuote.id]) {
-    //         selectedTags = tagsFromQuotes[selectedQuote.id].map(
-    //             (tagFromQuote) =>
-    //                 tags
-    //                     .map((tag) =>
-    //                         tag.tag === tagFromQuote ? tag.id : null
-    //                     )
-    //                     .filter((id) => id != null)[0]
-    //                 );
-    //     }
-    //     selectedQuote = { ...selectedQuote, tags: selectedTags };
-    //     setIsEditing(true);
-    //     setFormTable('quotes');
-    //     setEditingQuote(selectedQuote);
-    // };
 
     const handleSearchInput = (event) => {
         setSearch(event.target.value);
