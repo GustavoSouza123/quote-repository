@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import Error from './components/Error';
-import Quotes from './components/Quotes';
+import Quotes, { loader as quotesLoader } from './components/Quotes';
 import QuoteContent, { loader as quoteLoader } from './components/QuoteContent';
 import AddQuote, { loader as addQuoteLoader } from './components/AddQuote';
 import EditQuote from './components/EditQuote';
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Quotes />,
+                        loader: quotesLoader,
                     },
                     {
                         path: 'quotes/:quoteId',

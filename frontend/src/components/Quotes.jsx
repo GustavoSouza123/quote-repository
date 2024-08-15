@@ -1,70 +1,44 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import QuotePreview from './QuotePreview';
 
+export async function loader() {
+    try {
+        const quotes = await axios.get('http://localhost:8000/api/quotes');
+
+        const tags = await axios.get('http://localhost:8000/api/tags');
+
+        const res = await axios.get('http://localhost:8000/api/all');
+        let tagsFromQuotes = {};
+        if (res.data.length) {
+            res.data.forEach((quote) => {
+                tagsFromQuotes[quote.id] = [
+                    ...(tagsFromQuotes[quote.id] || ''),
+                    quote.tag,
+                ];
+            });
+        }
+
+        return {
+            quotes: quotes.data,
+            tags: tags.data,
+            tagsFromQuotes: tagsFromQuotes || [],
+        };
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default function Quotes() {
+    const { quotes, tags, tagsFromQuotes } = useLoaderData();
     const navigate = useNavigate();
 
     const [search, setSearch] = useState('');
     const [searchTags, setSearchTags] = useState([]);
-    const [quotes, setQuotes] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [tagsFromQuotes, setTagsFromQuotes] = useState({});
-
-    // TO-DO: REPLACE USEEFFECT FUNCTIONS FOR LOADER
-
-    useEffect(() => {
-        const getQuotes = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/api/quotes');
-                if (res.data.length) {
-                    setQuotes(res.data);
-                    setRandomQuote(
-                        res.data[Math.floor(Math.random() * res.data.length)]
-                    );
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        const getTags = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/api/tags');
-                if (res.data.length) {
-                    setTags(res.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        const getTagsFromQuotes = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/api/all');
-                if (res.data.length) {
-                    let tagsObj = {};
-                    res.data.forEach((quote) => {
-                        tagsObj[quote.id] = [
-                            ...(tagsObj[quote.id] || ''),
-                            quote.tag,
-                        ];
-                    });
-                    setTagsFromQuotes(tagsObj);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getQuotes();
-        getTags();
-        getTagsFromQuotes();
-    }, []);
 
     const handleAddQuoteBtnClick = () => {
         navigate('quotes/add');

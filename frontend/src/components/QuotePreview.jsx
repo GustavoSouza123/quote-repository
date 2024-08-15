@@ -10,7 +10,7 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
     const [click, setClick] = useState(false);
     const [display, setDisplay] = useState('hidden');
 
-    const handleQuoteClick = () => {
+    const handleQuoteClick = (e) => {
         navigate(`/quotes/${quote.id}`);
     };
 
@@ -56,14 +56,12 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
         >
             <div className="pr-10">“{quote.quote}”</div>
             <div className="">– {quote.author}</div>
-            <div className="flex gap-2">
+            <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
                 {tags[quote.id] ? (
                     tags[quote.id].map((tag, id) => (
                         <div
                             className="cursor-pointer underline font-light"
-                            onClick={() => {
-                                handleTagClick(tag);
-                            }}
+                            onClick={() => handleTagClick(tag)}
                             key={id}
                         >
                             {tag}

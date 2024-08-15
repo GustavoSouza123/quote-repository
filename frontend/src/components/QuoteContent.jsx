@@ -34,7 +34,7 @@ export async function loader({ params }) {
         return {
             quote: quote.data[0],
             tags: tags.data,
-            tagsFromQuotes: tagsFromQuotes[quote.data[0].id] || [],
+            tagsFromQuotes: tagsFromQuotes[quote?.data[0]?.id] || [],
         };
     } catch (error) {
         console.log(error);
