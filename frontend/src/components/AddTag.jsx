@@ -33,7 +33,7 @@ export default function AddQuote() {
             >
                 <div className="">Add Tag</div>
                 
-                <div className="w-[360px] flex justify-between items-center">
+                <div className="w-[340px] flex justify-between items-center">
                     <label htmlFor="author">Tag</label>
                     <input
                         type="text"

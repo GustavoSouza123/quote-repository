@@ -10,6 +10,7 @@ import QuoteContent, { loader as quoteLoader } from './components/QuoteContent';
 import AddQuote, { loader as addQuoteLoader } from './components/AddQuote';
 import EditQuote from './components/EditQuote';
 import AddTag from './components/AddTag';
+import EditTags, { loader as editTagsLoader } from './components/EditTags';
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,8 @@ const router = createBrowserRouter([
                     },
                     {
                         path: 'tags/edit',
+                        element: <EditTags />,
+                        loader: editTagsLoader,
                     },
                 ],
             },

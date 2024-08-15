@@ -82,6 +82,7 @@ export default function Quotes() {
     };
 
     const handleEditTagsBtnClick = () => {
+        navigate('tags/edit');
         // setIsEditing(true);
         // setFormTable('tags');
     };
