@@ -28,7 +28,7 @@ export default function App() {
     }, []);
 
     return (
-        <div className="min-h-[100dvh] flex flex-col items-center px-5 py-10">
+        <div className="min-h-[100dvh] flex flex-col items-center py-10">
             <Title content={'Quote Repository'} />
 
             <div className="">

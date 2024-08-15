@@ -18,6 +18,8 @@
         font-style: normal;
         color: #eee;
         background-color: #1a1a1a;
+        scrollbar-gutter: stable both-edges;
+        overflow: auto;
     }
 
     h1 {

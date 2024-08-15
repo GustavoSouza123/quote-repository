@@ -134,7 +134,7 @@ export default function Quotes() {
                 </div>
             </div>
 
-            <div className="lg:min-w-[290px] lg:max-w-[270px] sm:w-full py-5 flex flex-col gap-5 sm:order-first sm:border-t sm:border-gray">
+            <div className="lg:min-w-[290px] lg:max-w-[270px] sm:w-full py-5 flex flex-col gap-5 sm:order-first">
                 <div className="">
                     <span className="block mb-2 font-semibold">Tags:</span>
                     <div className="flex gap-2 flex-wrap">
