@@ -14,15 +14,17 @@ export default function EditQuote() {
         tags: tagsFromQuotes.map((tag) => tag.tagId),
     };
 
-    const checkboxesObj = tags.map((tag) => {
-        let checkedBool = false;
-        checkedBool =
-            tagsFromQuotes.length &&
-            tagsFromQuotes.findIndex(
-                (tagsFromQuote) => tagsFromQuote.tagId === tag.id
-            ) >= 0;
-        return { id: tag.id, tag: tag.tag, checked: checkedBool };
-    });
+    const checkboxesObj = tags.length
+        ? tags.map((tag) => {
+              let checkedBool = false;
+              checkedBool =
+                  tagsFromQuotes.length &&
+                  tagsFromQuotes.findIndex(
+                      (tagsFromQuote) => tagsFromQuote.tagId === tag.id
+                  ) >= 0;
+              return { id: tag.id, tag: tag.tag, checked: checkedBool };
+          })
+        : [];
 
     const [data, setData] = useState(values);
     const [checkboxes, setCheckboxes] = useState(checkboxesObj);
@@ -57,7 +59,7 @@ export default function EditQuote() {
             )
             .then(() => navigate('/'))
             .catch((error) => console.log(error));
-    }
+    };
 
     return (
         <form

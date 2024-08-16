@@ -5,8 +5,10 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export async function loader() {
     try {
-        const tags = await axios.get(`${import.meta.env.VITE_QUOTES_API}api/tags`);
-        return { tags: tags.data };
+        const tags = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/tags`
+        );
+        return { tags: tags.data.length ? tags.data : {} };
     } catch (error) {
         console.log(error);
     }
@@ -48,8 +50,12 @@ export default function EditTags() {
     const handleDeleteTag = async (index) => {
         try {
             if (confirm(`Do you want to delete tag ${index}?`)) {
-                await axios.delete(`${import.meta.env.VITE_QUOTES_API}api/tags/${index}`);
-                location.reload();
+                await axios
+                    .delete(
+                        `${import.meta.env.VITE_QUOTES_API}api/tags/${index}`
+                    )
+                    .then(() => navigate('/'))
+                    .catch((error) => console.log(error));
             }
         } catch (error) {
             console.log(error);
@@ -63,10 +69,9 @@ export default function EditTags() {
                 .put(`${import.meta.env.VITE_QUOTES_API}api/tags/${tag.id}`, {
                     tag: tag.tag,
                 })
-                .then(() => location.reload())
+                .then(() => navigate('/'))
                 .catch((error) => console.log(error));
         });
-        navigate('/');
     };
 
     return (
@@ -78,30 +83,34 @@ export default function EditTags() {
             >
                 <div className="">Edit Tags</div>
 
-                {tags.map((tag) => (
-                    <div className="flex items-center gap-5" key={tag.id}>
-                        <label htmlFor="tag">Tag {tag.id}</label>
-                        <input
-                            type="text"
-                            name="tag"
-                            id="tag"
-                            defaultValue={tag.tag}
-                            onChange={() => handleInput(event, tag.id)}
-                            className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
-                        />
-                        <div
-                            onClick={() => handleDeleteTag(tag.id)}
-                            className="cursor-pointer hover:text-[#aaa] transition"
-                        >
-                            Delete
+                {tags.length ? (
+                    tags.map((tag) => (
+                        <div className="flex items-center gap-5" key={tag.id}>
+                            <label htmlFor="tag">Tag {tag.id}</label>
+                            <input
+                                type="text"
+                                name="tag"
+                                id="tag"
+                                defaultValue={tag.tag}
+                                onChange={() => handleInput(event, tag.id)}
+                                className="w-80 h-10 bg-transparent border border-gray outline-none px-2 rounded"
+                            />
+                            <div
+                                onClick={() => handleDeleteTag(tag.id)}
+                                className="cursor-pointer hover:text-[#aaa] transition"
+                            >
+                                Delete
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    <div>No tags</div>
+                )}
 
                 <div className="flex justify-center">
                     <input
                         type="submit"
-                        value="Add"
+                        value="Update"
                         className="w-24 bg-blue px-3 py-2 rounded cursor-pointer"
                     />
                 </div>

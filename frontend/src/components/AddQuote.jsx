@@ -6,8 +6,10 @@ import Checkbox from './Checkbox';
 
 export async function loader() {
     try {
-        const tags = await axios.get(`${import.meta.env.VITE_QUOTES_API}api/tags`);
-        return { tags: tags.data };
+        const tags = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/tags`
+        );
+        return { tags: tags.data.length ? tags.data : {} };
     } catch (error) {
         console.log(error);
     }
@@ -23,9 +25,11 @@ export default function AddQuote() {
         tags: [],
     };
 
-    const checkboxesObj = tags.map((tag) => {
-        return { id: tag.id, tag: tag.tag, checked: false };
-    });
+    const checkboxesObj = tags.length
+        ? tags.map((tag) => {
+              return { id: tag.id, tag: tag.tag, checked: false };
+          })
+        : [];
 
     const [data, setData] = useState(values);
     const [checkboxes, setCheckboxes] = useState(checkboxesObj);
@@ -67,7 +71,7 @@ export default function AddQuote() {
                 onSubmit={handleSubmit}
             >
                 <div className="">Add quote</div>
-                
+
                 <div className="w-[360px] flex justify-between items-center">
                     <label htmlFor="quote">Quote</label>
                     <textarea
@@ -91,14 +95,18 @@ export default function AddQuote() {
                 </div>
 
                 <div className="w-[360px] flex justify-center flex-wrap gap-3">
-                    {checkboxes.map((checkbox, id) => (
-                        <Checkbox
-                            key={id}
-                            tag={checkbox.tag}
-                            isChecked={checkbox.checked}
-                            handleCheck={() => handleCheck(id)}
-                        />
-                    ))}
+                    {checkboxes.length ? (
+                        checkboxes.map((checkbox, id) => (
+                            <Checkbox
+                                key={id}
+                                tag={checkbox.tag}
+                                isChecked={checkbox.checked}
+                                handleCheck={() => handleCheck(id)}
+                            />
+                        ))
+                    ) : (
+                        <div>No tags</div>
+                    )}
                 </div>
 
                 <div className="flex justify-center">

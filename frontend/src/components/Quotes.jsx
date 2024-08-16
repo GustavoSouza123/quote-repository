@@ -30,8 +30,8 @@ export async function loader() {
         }
 
         return {
-            quotes: quotes.data,
-            tags: tags.data,
+            quotes: quotes.data.length ? quotes.data : {},
+            tags: tags.data.length ? tags.data : {},
             tagsFromQuotes: tagsFromQuotes || [],
         };
     } catch (error) {
@@ -72,19 +72,21 @@ export default function Quotes() {
         setSearchTags([]);
     };
 
-    const filteredQuotes = quotes
-        .filter((quote) => quote.quote.match(new RegExp(search, 'g')))
-        .filter((quote) => {
-            if (searchTags.length > 0) {
-                if (tagsFromQuotes[quote.id]) {
-                    return tagsFromQuotes[quote.id].some((tag) =>
-                        searchTags.includes(tag)
-                    );
+    const filteredQuotes =
+        quotes.length &&
+        quotes
+            .filter((quote) => quote.quote.match(new RegExp(search, 'gi')))
+            .filter((quote) => {
+                if (searchTags.length > 0) {
+                    if (tagsFromQuotes[quote.id]) {
+                        return tagsFromQuotes[quote.id].some((tag) =>
+                            searchTags.includes(tag)
+                        );
+                    }
+                    return false;
                 }
-                return false;
-            }
-            return true;
-        });
+                return true;
+            });
 
     return (
         <>
@@ -123,7 +125,7 @@ export default function Quotes() {
                 </div>
 
                 <div className="">
-                    {filteredQuotes.length > 0 ? (
+                    {filteredQuotes?.length > 0 ? (
                         filteredQuotes.map((quote) => (
                             <QuotePreview
                                 quote={quote}
@@ -144,7 +146,7 @@ export default function Quotes() {
                 <div className="">
                     <span className="block mb-2 font-semibold">Tags:</span>
                     <div className="flex gap-2 flex-wrap">
-                        {tags ? (
+                        {tags.length ? (
                             tags.map((tag, id) => (
                                 <div
                                     className="cursor-pointer underline font-light"

@@ -1,34 +1,33 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import './css/index.css';
 
 import Title from './components/Title';
 import RandomQuote from './components/RandomQuote';
 
+export async function loader() {
+    try {
+        const quotes = await axios.get(
+            `${import.meta.env.VITE_QUOTES_API}api/quotes`
+        );
+        return { quotes: quotes.data.length ? quotes.data : {} };
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default function App() {
+    const { quotes } = useLoaderData();
     const [randomQuote, setRandomQuote] = useState([]);
 
     useEffect(() => {
-        const getRandomQuote = async () => {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_QUOTES_API}api/quotes`);
-                if (res.data.length) {
-                    setRandomQuote(
-                        res.data[Math.floor(Math.random() * res.data.length)]
-                    );
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getRandomQuote();
-    }, []);
+        setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    }, [quotes]);
 
     return (
-        <div className="min-h-[100dvh] flex flex-col items-center py-10">
+        <div className="min-h-[100dvh] flex flex-col items-center py-10 px-3">
             <Title content={'Quote Repository'} />
 
             <div className="">
