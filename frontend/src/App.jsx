@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Outlet, useLoaderData } from 'react-router-dom';
+import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
 import './css/index.css';
 
 import Title from './components/Title';
@@ -20,6 +20,7 @@ export async function loader() {
 
 export default function App() {
     const { quotes } = useLoaderData();
+    const navigation = useNavigation();
     const [randomQuote, setRandomQuote] = useState([]);
 
     useEffect(() => {
@@ -27,7 +28,9 @@ export default function App() {
     }, [quotes]);
 
     return (
-        <div className="min-h-[100dvh] flex flex-col items-center py-10 px-3">
+        <div
+            className={`min-h-[100dvh] flex flex-col items-center py-10 px-3 ${navigation.state === 'loading' ? 'loading' : ''}`}
+        >
             <Title content={'Quote Repository'} />
 
             <div className="">

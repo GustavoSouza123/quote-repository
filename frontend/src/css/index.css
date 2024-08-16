@@ -25,4 +25,10 @@
     h1 {
         font-family: "Lora", serif;
     }
+
+    .loading {
+        opacity: 0.25;
+        transition: opacity .2s;
+        transition-delay: .2s;
+    }
 }
