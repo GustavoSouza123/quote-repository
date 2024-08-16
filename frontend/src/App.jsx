@@ -24,7 +24,11 @@ export default function App() {
     const [randomQuote, setRandomQuote] = useState([]);
 
     useEffect(() => {
-        setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+        setRandomQuote(
+            quotes.length
+                ? quotes[Math.floor(Math.random() * quotes.length)]
+                : []
+        );
     }, [quotes]);
 
     return (
