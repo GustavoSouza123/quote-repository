@@ -48,29 +48,53 @@ export async function loader({ params }) {
 export default function QuoteContent() {
     const { quote, tags, tagsFromQuotes } = useLoaderData();
 
-    return (
-        <div className="flex flex-col">
-            <div className="">
-                <p>{quote.id}</p>
-                <p>{quote.quote}</p>
-                <p>{quote.author}</p>
+    let created = quote.createdAt
+        .replace('.000Z', '')
+        .replace(/-/g, '/')
+        .split('T');
+    let time = created[1].split(':');
+    time[0] = parseInt(time[0]) - 5;
+    time = time.join(':');
+    created[1] = time;
+    created = created.join(', ');
 
-                <div className="flex flex-wrap gap-2">
-                    {tagsFromQuotes ? (
-                        tagsFromQuotes.map((tag, id) => (
-                            <div
-                                className="cursor-pointer underline font-light"
-                                key={id}
-                            >
-                                {tag.tag}
-                                {id + 1 == tagsFromQuotes.length ? '' : ', '}
-                            </div>
-                        ))
-                    ) : (
-                        <div className="">No tags</div>
-                    )}
-                </div>
+    let updated = '-';
+    if (quote.updatedAt) {
+        let updated = quote.updatedAt
+            .replace('.000Z', '')
+            .replace(/-/g, '/')
+            .split('T');
+        let time2 = updated[1].split(':');
+        time2[0] = parseInt(time2[0]) - 5;
+        time2 = time2.join(':');
+        updated[1] = time2;
+        updated = updated.join(', ');
+    }
+
+    return (
+        <div className="w-full flex flex-col gap-1 items-center py-10 text-center">
+            <div className="text-xl font-semibold">“{quote.quote}”</div>
+            <div className="">– {quote.author}</div>
+
+            <div className="flex flex-wrap gap-2 my-5">
+                <div className="">Tags:</div>
+                {tagsFromQuotes.length ? (
+                    tagsFromQuotes.map((tag, id) => (
+                        <div
+                            className="cursor-pointer underline font-light"
+                            key={id}
+                        >
+                            {tag.tag}
+                            {id + 1 == tagsFromQuotes.length ? '' : ', '}
+                        </div>
+                    ))
+                ) : (
+                    <div className="">No tags</div>
+                )}
             </div>
+
+            <div className="text-[#aaa]">Created at: {created}</div>
+            <div className="text-[#aaa]">Updated at: {updated}</div>
         </div>
     );
 }
