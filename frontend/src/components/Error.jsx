@@ -6,7 +6,7 @@ export default function Error() {
     console.error(error);
 
     return (
-        <div className="flex flex-col items-center justify-center w-full py-20 text-center">
+        <div className="flex flex-col items-center justify-center w-full py-20 px-3 text-center">
             <Title content={'Oops!'} />
             <p className="my-10 text-xl">Sorry, an unexpected error has occurred.</p>
             <p>{error.statusText || error.message}</p>
