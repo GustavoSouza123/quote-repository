@@ -11,7 +11,7 @@
 
     html,
     body {
-        font-family: "Rubik", sans-serif;
+        font-family: 'Rubik', sans-serif;
         font-size: 15px;
         font-optical-sizing: auto;
         font-weight: 400;
@@ -23,12 +23,12 @@
     }
 
     h1 {
-        font-family: "Lora", serif;
+        font-family: 'Lora', serif;
     }
 
     .loading {
         opacity: 0.25;
-        transition: opacity .2s;
-        transition-delay: .2s;
+        transition: opacity 0.2s;
+        transition-delay: 0.2s;
     }
 }

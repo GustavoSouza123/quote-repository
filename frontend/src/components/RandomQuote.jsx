@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function RandomQuote({ quote }) {
     return (
-        <div className="max-w-[600px] flex flex-col justify-center px-5 py-8 my-10 text-xl border border-gray">
+        <div className="max-w-[500px] flex flex-col justify-center px-5 py-8 my-10 text-xl bg-[#262626]">
             {quote ? (
                 <>
                     <span className="text-center">“{quote.quote}”</span>
