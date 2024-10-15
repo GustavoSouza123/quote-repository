@@ -48,27 +48,15 @@ export async function loader({ params }) {
 export default function QuoteContent() {
     const { quote, tags, tagsFromQuotes } = useLoaderData();
 
-    let created = quote.createdAt
-        .replace('.000Z', '')
-        .replace(/-/g, '/')
-        .split('T');
-    let time = created[1].split(':');
-    time[0] = parseInt(time[0]) - 5;
-    time = time.join(':');
-    created[1] = time;
-    created = created.join(', ');
+    let created = new Date(quote.createdAt).toLocaleString('pt-BR', {
+        timeZone: 'America/Denver',
+    });
 
     let updated = '-';
-    if (quote.updatedAt) {
-        let updated = quote.updatedAt
-            .replace('.000Z', '')
-            .replace(/-/g, '/')
-            .split('T');
-        let time2 = updated[1].split(':');
-        time2[0] = parseInt(time2[0]) - 5;
-        time2 = time2.join(':');
-        updated[1] = time2;
-        updated = updated.join(', ');
+    if (quote.updatedAt != null) {
+        updated = new Date(quote.updatedAt).toLocaleString('pt-BR', {
+            timeZone: 'America/Denver',
+        });
     }
 
     return (
