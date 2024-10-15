@@ -5,6 +5,7 @@ export default {
     theme: {
         extend: {
             screens: {
+                tn: { max: '426px' }, // <= 426px
                 sm: { max: '767px' }, // <= 767px
                 lg: { min: '768px' }, // >= 768px
             },

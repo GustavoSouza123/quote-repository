@@ -85,7 +85,7 @@ export default function QuoteContent() {
     };
 
     return (
-        <div className="w-full flex flex-col gap-1 items-center py-10 text-center">
+        <div className="w-full flex flex-col gap-1 items-center mt-10 py-10 px-5 text-center bg-[#262626]">
             <div className="text-xl font-semibold">“{quote.quote}”</div>
             <div className="">– {quote.author}</div>
 

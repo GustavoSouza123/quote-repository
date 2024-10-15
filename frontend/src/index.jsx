@@ -3,7 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import App, { loader as appLoader } from './App';
+import App from './App';
 import Error from './components/Error';
 import Quotes, { loader as quotesLoader } from './components/Quotes';
 import QuoteContent, { loader as quoteLoader } from './components/QuoteContent';
@@ -17,7 +17,6 @@ const router = createBrowserRouter([
         path: '/',
         element: <App />,
         errorElement: <Error />,
-        loader: appLoader,
         children: [
             {
                 errorElement: <Error />,
