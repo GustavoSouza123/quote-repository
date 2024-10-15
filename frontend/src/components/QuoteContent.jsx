@@ -89,7 +89,7 @@ export default function QuoteContent() {
             <div className="text-xl font-semibold">“{quote.quote}”</div>
             <div className="">– {quote.author}</div>
 
-            <div className="flex flex-wrap gap-2 my-5">
+            <div className="flex flex-wrap justify-center gap-2 my-5">
                 <div className="">Tags:</div>
                 {tagsFromQuotes.length ? (
                     tagsFromQuotes.map((tag, id) => (

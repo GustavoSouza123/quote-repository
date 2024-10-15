@@ -37,7 +37,7 @@ export default function App() {
             </div>
 
             <div
-                className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 sm:items-center justify-between mx-10 px-5`}
+                className={`w-full max-w-[1200px] flex sm:flex-col lg:gap-10 sm:items-center justify-between`}
             >
                 <Outlet />
             </div>
