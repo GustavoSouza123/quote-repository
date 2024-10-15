@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
 import './css/index.css';
@@ -12,24 +11,20 @@ export async function loader() {
         const quotes = await axios.get(
             `${import.meta.env.VITE_QUOTES_API}api/quotes`
         );
-        return { quotes: quotes.data.length ? quotes.data : {} };
+
+        let randomQuote = quotes.data.length
+            ? quotes.data[Math.floor(Math.random() * quotes.data.length)]
+            : [];
+
+        return { quotes: quotes.data.length ? quotes.data : {}, randomQuote };
     } catch (error) {
         console.log(error);
     }
 }
 
 export default function App() {
-    const { quotes } = useLoaderData();
+    const { quotes, randomQuote } = useLoaderData();
     const navigation = useNavigation();
-    const [randomQuote, setRandomQuote] = useState([]);
-
-    useEffect(() => {
-        setRandomQuote(
-            quotes.length
-                ? quotes[Math.floor(Math.random() * quotes.length)]
-                : []
-        );
-    }, [quotes]);
 
     return (
         <div
