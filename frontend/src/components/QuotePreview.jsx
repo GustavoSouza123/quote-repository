@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import dots from '../assets/dots.svg';
+// import dots from '../assets/dots.svg';
 
 export default function QuotePreview({ quote, tags, handleTagClick }) {
     const navigate = useNavigate();
@@ -14,45 +13,26 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
         navigate(`/quotes/${quote.id}`);
     };
 
-    const handleMouseEnter = () => {
-        setDisplay('block');
-    };
+    // const handleMouseEnter = () => {
+    //     setDisplay('block');
+    // };
 
-    const handleMouseLeave = () => {
-        setDisplay('hidden');
-        setClick(false);
-    };
+    // const handleMouseLeave = () => {
+    //     setDisplay('hidden');
+    //     setClick(false);
+    // };
 
-    const handleDotsClick = (e) => {
-        e.stopPropagation();
-        setClick(true);
-    };
-
-    const handleEditQuoteBtnClick = (e) => {
-        e.stopPropagation();
-        navigate(`/quotes/${quote.id}/edit`);
-    };
-
-    const handleDeleteQuoteBtnClick = async (e) => {
-        e.stopPropagation();
-        try {
-            if (confirm(`Do you want to delete quote ${quote.id}?`)) {
-                await axios.delete(
-                    `${import.meta.env.VITE_QUOTES_API}api/quotes/${quote.id}`
-                );
-                location.reload();
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // const handleDotsClick = (e) => {
+    //     e.stopPropagation();
+    //     setClick(true);
+    // };
 
     return (
         <div
             className="relative flex flex-col gap-1 justify-between py-5 border-t border-gray hover:bg-hover transition"
             onClick={handleQuoteClick}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            // onMouseEnter={handleMouseEnter}
+            // onMouseLeave={handleMouseLeave}
         >
             <div className="pr-10">“{quote.quote}”</div>
             <div className="">– {quote.author}</div>
@@ -72,7 +52,7 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
                     <div className="">No tags</div>
                 )}
             </div>
-            <div className={`absolute top-5 right-2 ${display}`}>
+            {/* <div className={`absolute top-5 right-2 ${display}`}>
                 <img
                     className="w-6 cursor-pointer"
                     src={dots}
@@ -95,7 +75,7 @@ export default function QuotePreview({ quote, tags, handleTagClick }) {
                 >
                     Delete
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
